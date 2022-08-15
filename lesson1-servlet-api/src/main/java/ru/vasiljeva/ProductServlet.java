@@ -50,10 +50,10 @@ public class ProductServlet extends HttpServlet {
 		PrintWriter wr = resp.getWriter();
 
 		if (req.getPathInfo() == null || req.getPathInfo().equals("/")) {
-			printAllProducts(wr);
+			printAllProducts(req.getRequestURL().toString(), wr);
 			return;
 		}
-
+		
 		Long id = getIdFromInfo(req.getPathInfo());
 		if (id == -1) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, BAD_REQUEST_MESSAGE);
@@ -72,7 +72,7 @@ public class ProductServlet extends HttpServlet {
 		wr.println("<p>Cost: " + product.getCost() + "</p>");
 	}
 
-	private void printAllProducts(PrintWriter wr) {
+	private void printAllProducts(String requestURL, PrintWriter wr) {
 
 		wr.println("<h1>Product list</h1>");
 
@@ -85,7 +85,7 @@ public class ProductServlet extends HttpServlet {
 
 		for (Product product : productRepository.findAll()) {
 			wr.println("<tr>");
-			wr.println("<td>" + product.getId() + "</td>");
+			wr.println("<td><a href = \""+requestURL+"/"+product.getId()+"\">" + product.getId() + "</a></td>");
 			wr.println("<td>" + product.getTitle() + "</td>");
 			wr.println("<td>" + product.getCost() + "</td>");
 			wr.println("</tr>");
