@@ -1,4 +1,4 @@
-package ru.titov.persist;
+package ru.vasiljeva.persist;
 
 public class User {
 

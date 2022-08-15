@@ -1,7 +1,7 @@
-package ru.titov;
+package ru.vasiljeva;
 
-import ru.titov.persist.User;
-import ru.titov.persist.UserRepository;
+import ru.vasiljeva.persist.User;
+import ru.vasiljeva.persist.UserRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

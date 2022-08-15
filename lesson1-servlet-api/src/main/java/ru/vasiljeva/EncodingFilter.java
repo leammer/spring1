@@ -1,4 +1,4 @@
-package ru.titov;
+package ru.vasiljeva;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
