@@ -16,8 +16,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet(urlPatterns = "/product")
+@WebServlet(urlPatterns = "/product/*")
 public class ProductServlet extends HttpServlet {
+
+	private final String BAD_REQUEST_MESSAGE = "The request must contain the product number in a numeric value";
+	private final String NOT_FOUND_MESSAGE = "There is no such product";
 
 	private ProductRepository productRepository;
 
@@ -45,6 +48,32 @@ public class ProductServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter wr = resp.getWriter();
+
+		if (req.getPathInfo() == null || req.getPathInfo().equals("/")) {
+			printAllProducts(wr);
+			return;
+		}
+
+		Long id = getIdFromInfo(req.getPathInfo());
+		if (id == -1) {
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, BAD_REQUEST_MESSAGE);
+			return;
+		}
+
+		Product product = productRepository.findById(id);
+		if (product == null) {
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND, NOT_FOUND_MESSAGE);
+			return;
+		}
+
+		wr.println("<h1>Product info</h1>");
+		
+		wr.println("<p>Title: " + product.getTitle() + "</p>");
+		wr.println("<p>Cost: " + product.getCost() + "</p>");
+	}
+
+	private void printAllProducts(PrintWriter wr) {
+
 		wr.println("<h1>Product list</h1>");
 
 		wr.println("<table>");
@@ -63,5 +92,14 @@ public class ProductServlet extends HttpServlet {
 		}
 
 		wr.println("</table>");
+	}
+
+	private static Long getIdFromInfo(String str) {
+		try {
+			Long id = Long.parseLong(str.substring(1));
+			return id;
+		} catch (NullPointerException | NumberFormatException e) {
+			return (long) -1;
+		}
 	}
 }
