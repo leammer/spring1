@@ -22,7 +22,7 @@
     </dependencies>
 
 <build>
-        <finalName>servlet-app</finalName>
+        <finalName>servlet-api</finalName>
 
         <plugins>
             <plugin>
