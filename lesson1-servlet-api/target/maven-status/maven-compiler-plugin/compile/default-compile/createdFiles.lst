@@ -1,0 +1,9 @@
+ru\titov\SecondServlet.class
+ru\titov\CalcServlet.class
+ru\titov\UserServlet.class
+ru\titov\FirstServlet.class
+ru\titov\persist\User.class
+ru\titov\BootstrapListener.class
+ru\titov\EncodingFilter.class
+ru\titov\FirstHttpServlet.class
+ru\titov\persist\UserRepository.class
