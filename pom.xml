@@ -13,7 +13,7 @@
 	</properties>
 
 	<modules>
-		<module>lesson1-servlet-api</module>
-		<!-- <module>lesson2-spring-basics</module>-->
+		<!--<module>lesson1-servlet-api</module>-->
+		<module>lesson2-spring-basics</module>
 	</modules>
 </project>
