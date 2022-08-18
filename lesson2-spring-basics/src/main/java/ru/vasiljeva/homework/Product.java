@@ -6,10 +6,12 @@ public class Product {
 
     private Long id;
     private String name;
+    private Float cost;
 
-    public Product(Long id, String name) {
+    public Product(Long id, String name, Float cost) {
         this.id = id;
         this.name = name;
+        this.cost = cost;
     }
 
     public Long getId() {
@@ -28,24 +30,33 @@ public class Product {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name);
-    }
+    public Float getCost() {
+		return cost;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
+	public void setCost(Float cost) {
+		this.cost = cost;
+	}
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(cost, id, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		return Objects.equals(cost, other.cost) && Objects.equals(id, other.id) && Objects.equals(name, other.name);
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", cost=" + cost + "]";
+	}
 }

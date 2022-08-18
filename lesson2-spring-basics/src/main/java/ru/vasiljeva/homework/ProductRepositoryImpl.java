@@ -6,6 +6,13 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
 
@@ -13,11 +20,21 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @PostConstruct
     public void init() {
-        addProduct(1L, new Product(1L, "productName"));
-        addProduct(2L, new Product(2L, "productName"));
-        addProduct(3L, new Product(3L, "productName"));
-        addProduct(4L, new Product(4L, "productName"));
-        addProduct(5L, new Product(5L, "productName"));
+    	InputStream is = getClass().getClassLoader().getResourceAsStream("products.txt");
+		try (InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
+				BufferedReader reader = new BufferedReader(streamReader)) {
+
+			String line;
+			Long id = 1L;
+			while ((line = reader.readLine()) != null) {
+				String s[] = line.split("\\s");
+				addProduct(id, new Product(id, s[0], Float.parseFloat(s[1])));
+		        id++;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @Override
