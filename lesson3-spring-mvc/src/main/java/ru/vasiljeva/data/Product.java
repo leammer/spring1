@@ -1,4 +1,4 @@
-package ru.vasiljeva;
+package ru.vasiljeva.data;
 
 import java.util.Objects;
 
@@ -6,6 +6,13 @@ public class Product {
 	private Long id;
 	private String name;
 	private Float cost;
+
+	public Product(Long id, String name, Float cost) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.cost = cost;
+	}
 
 	public Long getId() {
 		return id;
