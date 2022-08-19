@@ -1,0 +1,5 @@
+milk 10.5
+bread 22
+carrot 32.0
+onion 4000
+chicken 429.53
