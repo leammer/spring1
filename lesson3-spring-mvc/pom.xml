@@ -55,7 +55,7 @@
 					<url>http://localhost:8080/manager/text</url>
 					<username>admin</username>
 					<password>admin</password>
-					<path>/servlet-app</path>
+					<path>/spring-mvc</path>
 				</configuration>
 			</plugin>
 		</plugins>

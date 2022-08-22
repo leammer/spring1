@@ -35,7 +35,7 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <a class="btn btn-primary" href="user_form.html">Add User</a>
+            <a class="btn btn-primary" th:href="@{/product/new}">Add product</a>
         </div>
 
         <div class="col-12">
@@ -44,16 +44,16 @@
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Cost</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="product : ${products}">
                     <th scope="row" th:text="${product.id}">1</th>
-                    <td th:text="${product.name}">Product title</td>
+                    <td th:text="${product.name}">Milk</td>
                     <td>
                         <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger" href="#"><i class="far fa-trash-alt"></i></a>
+                        <a class="btn btn-danger"  th:href="@{/product/delete/{id}(id = ${product.id})}"><i class="far fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 </tbody>
