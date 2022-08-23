@@ -3,12 +3,13 @@ package ru.vasiljeva.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import lombok.RequiredArgsConstructor;
+import ru.vasiljeva.data.Product;
 import ru.vasiljeva.data.ProductRepository;
 
 @Controller
@@ -16,22 +17,28 @@ import ru.vasiljeva.data.ProductRepository;
 public class ProductController {
 
 	@Autowired
-	private ProductRepository productRepository;
-
+	private ProductRepository repo;
+	
 	@GetMapping
-	public String listPage(Model model) {
-		model.addAttribute("products", productRepository.getAll());
-		return "product";
+	public String getAll(Model model) {
+		model.addAttribute("products", repo.getAll());
+		return "static/views/product";
 	}
 
 	@GetMapping("/{id}")
-	public String form(@PathVariable("id") long id, Model model) {
-		model.addAttribute("product", productRepository.findProductById(id));
-		return "product_form";
+	public String getProductById(@PathVariable("id") long id, Model model) {
+		model.addAttribute("product", repo.findProductById(id));
+        return "static/views/product_form";
 	}
-
+	
+	@PostMapping
+	public String saveProduct(@Validated Product product) {
+		return "redirect:/product";
+	}
 	/*
-	 * @PostMapping public String saveUser(Product product) {
-	 * productRepository.update(product); return "redirect:/user"; }
+	 * @RequestMapping(value = "/user", method = RequestMethod.POST) public String
+	 * user(@Validated User user, Model model) {
+	 * System.out.println("User Page Requested"); model.addAttribute("userName",
+	 * user.getUserName()); return "user"; }
 	 */
 }
