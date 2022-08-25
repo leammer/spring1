@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ProductRepository {
 
-	public void addProduct(Long id, Product product);
+	public void insert(Product product);
 
 	public Product getById(Long id);
 
@@ -12,5 +12,5 @@ public interface ProductRepository {
 	
 	public void remove(Long id);
 	
-	public void edit(Long id, Product product);
+	public void save(Product product);
 }

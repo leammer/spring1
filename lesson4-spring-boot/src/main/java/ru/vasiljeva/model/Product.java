@@ -1,63 +1,30 @@
 package ru.vasiljeva.model;
 
-import java.util.Objects;
+import javax.validation.constraints.NotBlank;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Product {
+
 	private Long id;
-	private String name;
-	private Float cost;
 
-	public Product(Long id, String name, Float cost) {
+	private @NotBlank String name;
+
+	private @NonNull Float cost;
+
+	public Product(@NotBlank String name, @NonNull Float cost) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.cost = cost;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Float getCost() {
-		return cost;
-	}
-
-	public void setCost(Float cost) {
-		this.cost = cost;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(cost, id, name);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		return Objects.equals(cost, other.cost) && Objects.equals(id, other.id) && Objects.equals(name, other.name);
-	}
-
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", cost=" + cost + "]";
-	}
-
 }
