@@ -22,13 +22,13 @@ public class ProductController {
 	@GetMapping
 	public String getAll(Model model) {
 		model.addAttribute("products", repo.getAll());
-		return "static/views/product";
+		return "product";
 	}
 
 	@GetMapping("/{id}")
 	public String getProductById(@PathVariable("id") long id, Model model) {
 		model.addAttribute("product", repo.findProductById(id));
-        return "static/views/product_form";
+        return "product_form";
 	}
 	
 	@PostMapping
