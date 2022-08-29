@@ -26,7 +26,7 @@ public class Product {
 	@Column(name = "title", length = 30)
 	private @NonNull String name;
 
-	@Column(name = "price", length = 10)
+	@Column(name = "price")
 	private Double cost;
 
 	public Product(@NonNull String name, Double cost) {

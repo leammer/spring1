@@ -11,7 +11,7 @@ import ru.vasiljeva.model.Product;
 public class Main {
 
 	public static void main(String[] args) {
-		EntityManagerFactory entityManagerFactory = new Configuration().configure("hibernate.cfg.xml")
+		/*EntityManagerFactory entityManagerFactory = new Configuration().configure("hibernate.cfg.xml")
 				.buildSessionFactory();
 
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -77,7 +77,7 @@ public class Main {
 
 		}
 		entityManager.close();
-		entityManagerFactory.close();
+		entityManagerFactory.close();*/
 
 	}
 

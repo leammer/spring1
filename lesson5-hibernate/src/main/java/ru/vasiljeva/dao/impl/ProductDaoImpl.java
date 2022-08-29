@@ -2,8 +2,11 @@ package ru.vasiljeva.dao.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +19,12 @@ public class ProductDaoImpl implements ProductDao {
 
 	private SessionFactory sessionFactory;
 
+	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
+	@Transactional
 	@Override
 	public void addProduct(Product product) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -28,6 +33,7 @@ public class ProductDaoImpl implements ProductDao {
 
 	}
 
+	@Transactional
 	@Override
 	public void updateProduct(Product product) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -35,6 +41,7 @@ public class ProductDaoImpl implements ProductDao {
 		log.info("Product was updated. Product details: " + product);
 	}
 
+	@Transactional
 	@Override
 	public void removeProduct(Long id) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -47,6 +54,7 @@ public class ProductDaoImpl implements ProductDao {
 		log.info("Couldn't find product by id " + id);
 	}
 
+	@Transactional
 	@Override
 	public Product getProductById(Long id) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -55,6 +63,7 @@ public class ProductDaoImpl implements ProductDao {
 		return product;
 	}
 
+	@Transactional
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Product> getAll() {
