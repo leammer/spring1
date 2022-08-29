@@ -45,8 +45,48 @@ public class AppConfig implements WebMvcConfigurer {
     private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "entitymanager.packages.to.scan";
     
+    
     @Resource
 	private Environment env;
+    
+    private ApplicationContext applicationContext;
+
+    @Autowired
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+    }
+
+    @Bean
+    public ViewResolver htmlViewResolver() {
+        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+        resolver.setTemplateEngine(templateEngine(htmlTemplateResolver()));
+        resolver.setContentType("text/html");
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setViewNames(new String[] {"*"});
+        return resolver;
+    }
+
+    private ITemplateResolver htmlTemplateResolver() {
+        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+        resolver.setApplicationContext(applicationContext);
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".html");
+        resolver.setCacheable(false);
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setTemplateMode(TemplateMode.HTML);
+        return resolver;
+    }
+
+    private ISpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
+        SpringTemplateEngine engine = new SpringTemplateEngine();
+        engine.setTemplateResolver(templateResolver);
+        return engine;
+    }
 	
 	@Bean
 	public DataSource dataSource() {
