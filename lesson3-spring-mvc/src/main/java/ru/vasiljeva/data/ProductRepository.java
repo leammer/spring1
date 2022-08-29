@@ -4,9 +4,13 @@ import java.util.List;
 
 public interface ProductRepository {
 
-	public void addProduct(Long id, Product product);
+	public void insert(Product product);
 
-	public Product findProductById(Long id);
+	public Product getById(Long id);
+
+	public void remove(Long id);
+
+	public Product update(Product product);
 
 	public List<Product> getAll();
 }
