@@ -1,16 +1,17 @@
 package ru.vasiljeva.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.Setter;
 
 @Data
 @Entity
@@ -23,13 +24,13 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "title", length = 30)
-	private @NonNull String name;
+	@Column(name = "title", length = 30, nullable = false)
+	private String name;
 
-	@Column(name = "price")
-	private Double cost;
+	@Column(name = "price", precision = 10, scale = 2, nullable = true)
+	private BigDecimal cost;
 
-	public Product(@NonNull String name, Double cost) {
+	public Product(@NonNull String name, BigDecimal cost) {
 		super();
 		this.name = name;
 		this.cost = cost;

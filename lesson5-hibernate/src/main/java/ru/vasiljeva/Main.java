@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.hibernate.cfg.Configuration;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import ru.vasiljeva.model.Product;
 
 public class Main {

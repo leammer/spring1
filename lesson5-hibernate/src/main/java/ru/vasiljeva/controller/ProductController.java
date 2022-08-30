@@ -1,5 +1,6 @@
 package ru.vasiljeva.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +63,7 @@ public class ProductController {
 	}
 
 	@PostMapping
-	public String saveOrUpdate(@RequestBody @Validated Product bean, HttpServletResponse response) {
+	public String saveOrUpdate(@RequestBody Product bean, HttpServletResponse response) {
 		if (null == bean.getId()) {
 			log.info("Save product " + bean);
 			
