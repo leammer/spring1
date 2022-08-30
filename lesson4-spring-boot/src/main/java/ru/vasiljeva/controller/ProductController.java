@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.vasiljeva.dao.ProductDao;
 import ru.vasiljeva.exceptions.EntityNotFoundException;
 import ru.vasiljeva.model.Product;
-import ru.vasiljeva.model.ProductRepository;
+import ru.vasiljeva.service.ProductService;
+
 
 @Controller
 @RequestMapping("/product")
@@ -31,19 +33,19 @@ import ru.vasiljeva.model.ProductRepository;
 public class ProductController {
 	
 	@Autowired
-	private ProductRepository repo;
+	private ProductService service;
 
 	@GetMapping
 	public String getAll(Model model) {
 		log.info("Get full product list");
-		model.addAttribute("products", repo.getAll());
+		model.addAttribute("products", service.getAll());
 		return "product";
 	}
 
 	@GetMapping("/{id}")
-	public String getById(@PathVariable("id") long id, Model model) {
+	public String getById(@PathVariable("id") Long id, Model model) {
 		log.info("Get product by id " + id);
-		Product product = repo.getById(id);
+		Product product = service.getProductById(id);
 		if (product == null) {
 			throw new EntityNotFoundException("Couldn't find product by id " + id);
 		}
@@ -58,16 +60,16 @@ public class ProductController {
 	}
 
 	@DeleteMapping("/{id}")
-	public String deleteById(@PathVariable("id") long id, Model model) {
+	public String deleteById(@PathVariable("id") Long id, Model model) {
 		log.info("Remove product by id " + id);
-		repo.remove(id);
+		service.removeProduct(id);
 		return "redirect:/product";
 	}
 
 	@PostMapping
 	public String save(@Valid Product product) {
 		log.info("Save product" + product);
-		repo.save(product);
+		service.addProduct(product);
 		return "redirect:/product";
 	}
 	
