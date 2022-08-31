@@ -23,11 +23,35 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE IF NOT EXISTS product (
-    id bigserial,
-    price numeric(10, 2),
-    title character varying(30) NOT NULL
+	id bigserial NOT NULL,
+	price numeric(10, 2) NOT NULL,
+	title varchar(30) NOT NULL,
+	CONSTRAINT product_pkey PRIMARY KEY (id)
 );
 
+--
+-- Name: customer; Type: TABLE; Schema: test;
+--
+
+CREATE TABLE IF NOT EXISTS customer (
+	id bigserial NOT NULL,
+	name varchar(30) NOT NULL,
+	CONSTRAINT customer_pkey PRIMARY KEY (id)
+);
+
+--
+-- Name: item; Type: TABLE; Schema: test;
+--
+
+CREATE TABLE IF NOT EXISTS item (
+	id bigserial NOT NULL,
+	quantity int8 NULL,
+	customer_id int8 NULL,
+	product_id int8 NULL,
+	CONSTRAINT item_pkey PRIMARY KEY (id),
+	CONSTRAINT customer_fkey FOREIGN KEY (customer_id) REFERENCES customer(id),
+	CONSTRAINT product_fkey FOREIGN KEY (product_id) REFERENCES product(id)
+);
 
 --
 -- Data for Name: product; Type: TABLE DATA; Schema: test;
@@ -39,14 +63,29 @@ INSERT INTO product VALUES (DEFAULT, 32.50, 'Carrot');
 INSERT INTO product VALUES (DEFAULT, 400, 'Onion');
 INSERT INTO product VALUES (DEFAULT, 429.53, 'Chicken');
 
+--
+-- Data for Name: customer; Type: TABLE DATA; Schema: test;
+--
+
+INSERT INTO customer VALUES (DEFAULT, 'Ivan Ivanov');
+INSERT INTO customer VALUES (DEFAULT, 'Peter Petrov');
+INSERT INTO customer VALUES (DEFAULT, 'Semyon Semenov');
 
 --
--- Name: course_pkey; Type: CONSTRAINT; Schema: test; Owner: -
+-- Data for Name: item; Type: TABLE DATA; Schema: test;
 --
 
-ALTER TABLE ONLY product
-    ADD CONSTRAINT product_pkey PRIMARY KEY (id);
+-- Ivan Ivanov's package: 2 milks, 1 bread
+INSERT INTO item VALUES (DEFAULT, 2, 1, 1);
+INSERT INTO item VALUES (DEFAULT, 1, 1, 2);
 
+-- Peter Petrov's package: 1 chicken, 3 carrots, 2 onions
+INSERT INTO item VALUES (DEFAULT, 1, 2, 5);
+INSERT INTO item VALUES (DEFAULT, 3, 2, 3);
+INSERT INTO item VALUES (DEFAULT, 2, 2, 4);
+
+-- Semyon Semenov's package: 8 breads
+INSERT INTO item VALUES (DEFAULT, 8, 3, 2);
 
 --
 -- PostgreSQL database complete
