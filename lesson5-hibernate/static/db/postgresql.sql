@@ -23,9 +23,9 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE IF NOT EXISTS product (
-    id serial,
-    title character varying(30) NOT NULL,
-    price numeric(10, 2)
+    id bigserial,
+    price numeric(10, 2),
+    title character varying(30) NOT NULL
 );
 
 
@@ -33,11 +33,11 @@ CREATE TABLE IF NOT EXISTS product (
 -- Data for Name: product; Type: TABLE DATA; Schema: test;
 --
 
-INSERT INTO product VALUES (DEFAULT, 'Milk', 10.15);
-INSERT INTO product VALUES (DEFAULT, 'Bread', 22.00);
-INSERT INTO product VALUES (DEFAULT, 'Carrot', 32.50);
-INSERT INTO product VALUES (DEFAULT, 'Onion', 400.00);
-INSERT INTO product VALUES (DEFAULT, 'Chicken', 429.53);
+INSERT INTO product VALUES (DEFAULT, 10.15, 'Milk');
+INSERT INTO product VALUES (DEFAULT, 22.00, 'Bread');
+INSERT INTO product VALUES (DEFAULT, 32.50, 'Carrot');
+INSERT INTO product VALUES (DEFAULT, 400, 'Onion');
+INSERT INTO product VALUES (DEFAULT, 429.53, 'Chicken');
 
 
 --
