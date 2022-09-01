@@ -9,15 +9,15 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.vasiljeva.model.Product;
 import ru.vasiljeva.service.ProductService;
 
-// @formatter:off
+//@formatter:off
 /** Work with Grocery Catalogue:
- * C - create new product
- * R - read product info by id
- * U - update product info
- * D - delete product by id
- * A - print full catalogue
- * */
-// @formatter:on
+* C - create new product
+* R - read product info by id
+* U - update product info
+* D - delete product by id
+* A - print full catalogue
+* */
+//@formatter:on
 public class Main2 {
 
 	public static void main(String[] args) {

@@ -45,9 +45,9 @@ CREATE TABLE IF NOT EXISTS customer (
 
 CREATE TABLE IF NOT EXISTS item (
 	id bigserial NOT NULL,
-	quantity int8 NULL,
-	customer_id int8 NULL,
-	product_id int8 NULL,
+	quantity int8,
+	customer_id int8 NOT NULL,
+	product_id int8 NOT NULL,
 	CONSTRAINT item_pkey PRIMARY KEY (id),
 	CONSTRAINT customer_fkey FOREIGN KEY (customer_id) REFERENCES customer(id),
 	CONSTRAINT product_fkey FOREIGN KEY (product_id) REFERENCES product(id)

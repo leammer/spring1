@@ -1,6 +1,6 @@
 package ru.vasiljeva.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Customer")
 @NoArgsConstructor
 public class Customer {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -27,5 +27,11 @@ public class Customer {
 	private String name;
 
 	@OneToMany(mappedBy = "customer")
-	private List<Item> products;
+	private Set<Item> items;
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", cart={" + items + "}]";
+	}
+
 }
