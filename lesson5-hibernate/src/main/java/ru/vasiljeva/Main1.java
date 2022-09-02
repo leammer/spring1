@@ -1,15 +1,19 @@
 package ru.vasiljeva;
 
+import java.math.BigDecimal;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.cfg.Configuration;
 
 import ru.vasiljeva.model.Product;
 
-public class Main {
+public class Main1 {
 
 	public static void main(String[] args) {
-		/*EntityManagerFactory entityManagerFactory = new Configuration().configure("hibernate.cfg.xml")
+		EntityManagerFactory entityManagerFactory = new Configuration().configure("hibernate.cfg.xml")
 				.buildSessionFactory();
 
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -20,11 +24,11 @@ public class Main {
 
 			entityManager.getTransaction().begin();
 
-			entityManager.persist(new Product("Milk", 10.5));
-			entityManager.persist(new Product("Bread", 18.0));
-			entityManager.persist(new Product("Carrot", 32.50));
-			entityManager.persist(new Product("Onion", 400.00));
-			entityManager.persist(new Product("Chicken", 429.53));
+			entityManager.persist(new Product("Milk", new BigDecimal(10.5)));
+			entityManager.persist(new Product("Bread", new BigDecimal(18.0)));
+			entityManager.persist(new Product("Carrot", new BigDecimal(32.50)));
+			entityManager.persist(new Product("Onion", new BigDecimal(400.00)));
+			entityManager.persist(new Product("Chicken", new BigDecimal(429.53)));
 
 			entityManager.getTransaction().commit();
 		}
@@ -56,7 +60,7 @@ public class Main {
 		{
 			entityManager.getTransaction().begin();
 
-			Product product = new Product("Product2", 20.0);
+			Product product = new Product("Product2", new BigDecimal(20.0));
 			product.setId(2L);
 			entityManager.merge(product);
 
@@ -68,14 +72,14 @@ public class Main {
 			entityManager.getTransaction().begin();
 			Product product = entityManager.find(Product.class, 2L);
 			entityManager.remove(product);
-			
+
 			entityManager.createQuery("DELETE FROM Product p where p.id = 3").executeUpdate();
 
 			entityManager.getTransaction().commit();
 
 		}
 		entityManager.close();
-		entityManagerFactory.close();*/
+		entityManagerFactory.close();
 
 	}
 

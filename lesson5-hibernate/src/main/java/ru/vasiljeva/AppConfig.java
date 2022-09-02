@@ -15,6 +15,11 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import ru.vasiljeva.dao.ProductDao;
+import ru.vasiljeva.dao.impl.ProductDaoImpl;
+import ru.vasiljeva.service.ProductService;
+import ru.vasiljeva.service.impl.ProductServiceImpl;
+
 @Configuration
 @ComponentScan("ru.vasiljeva")
 @EnableTransactionManagement
@@ -77,5 +82,21 @@ public class AppConfig {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(sessionFactory().getObject());
 		return transactionManager;
+	}
+
+	/* DAOs */
+	@Bean
+	public ProductDao productDao() {
+		ProductDaoImpl dao = new ProductDaoImpl();
+		dao.setSessionFactory(sessionFactory().getObject());
+		return dao;
+	}
+
+	/* Services */
+	@Bean
+	public ProductService productService() {
+		ProductServiceImpl service = new ProductServiceImpl();
+		service.setProductDao(productDao());
+		return service;
 	}
 }
