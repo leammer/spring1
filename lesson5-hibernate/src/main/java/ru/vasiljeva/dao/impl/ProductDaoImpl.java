@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -45,13 +46,9 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public void removeProduct(Long id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Product product = (Product) session.load(Product.class, id);
-		if (product != null) {
-			session.remove(product);
-			log.info("Product was removed.");
-		}
-
-		log.info("Couldn't find product by id " + id);
+		String sql = "DELETE FROM Product WHERE id = :id";
+		session.createQuery(sql).setParameter("id", id).executeUpdate();
+		log.info("Product was removed.");
 	}
 
 	@Transactional
