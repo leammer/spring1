@@ -6,7 +6,6 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,7 +30,6 @@ public class ProductDaoImpl implements ProductDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(product);
 		log.info("Product added successfully. Product details: " + product);
-
 	}
 
 	@Transactional
@@ -66,11 +64,9 @@ public class ProductDaoImpl implements ProductDao {
 	public List<Product> getAll() {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Product> list = session.createQuery("from Product", Product.class).list();
-
 		for (Product product : list) {
 			log.info("Product info: " + product);
 		}
-
 		return list;
 	}
 
