@@ -2,16 +2,14 @@ package ru.vasiljeva.service;
 
 import java.util.List;
 
-import ru.vasiljeva.model.Product;
+import ru.vasiljeva.dto.ProductDto;
 
 public interface ProductService {
-	public void addProduct(Product product);
-
-	public void updateProduct(Product product);
+	public void addProduct(ProductDto product);
 
 	public void removeProduct(Long id);
 
-	public Product getProductById(Long id);
+	public ProductDto getProductById(Long id);
 
-	public List<Product> getAll();
+	public List<ProductDto> getAll();
 }

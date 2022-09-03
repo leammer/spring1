@@ -1,27 +1,21 @@
 package ru.vasiljeva.controller;
 
-import java.util.Locale;
-
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
 import lombok.extern.slf4j.Slf4j;
-import ru.vasiljeva.dao.ProductDao;
 import ru.vasiljeva.exceptions.EntityNotFoundException;
 import ru.vasiljeva.model.Product;
 import ru.vasiljeva.service.ProductService;
@@ -31,8 +25,9 @@ import ru.vasiljeva.service.ProductService;
 @RequestMapping("/product")
 @Slf4j
 public class ProductController {
+	Logger log = LoggerFactory.getLogger(ProductController.class);
 	
-	@Autowired
+	/*@Autowired
 	private ProductService service;
 
 	@GetMapping
@@ -78,5 +73,5 @@ public class ProductController {
     public String notFoundExceptionHandler(Model model, EntityNotFoundException e) {
         model.addAttribute("message", e.getMessage());
         return "error_form";
-    }
+    }*/
 }

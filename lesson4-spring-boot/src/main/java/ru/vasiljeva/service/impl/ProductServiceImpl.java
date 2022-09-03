@@ -1,6 +1,7 @@
 package ru.vasiljeva.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 //import javax.transaction.Transactional;
 
@@ -8,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.Setter;
-import ru.vasiljeva.dao.ProductDao;
+import ru.vasiljeva.dto.ProductDto;
 import ru.vasiljeva.model.Product;
+import ru.vasiljeva.repository.ProductRepository;
+import ru.vasiljeva.service.MappingUtils;
 import ru.vasiljeva.service.ProductService;
 
 @Service
@@ -17,30 +20,29 @@ import ru.vasiljeva.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	private ProductDao productDao;
+	private ProductRepository productRepository;
+
+	@Autowired
+	private MappingUtils mappingUtils;
 
 	@Override
-	public void addProduct(Product product) {
-		this.productDao.saveAndFlush(product);
-	}
-
-	@Override
-	public void updateProduct(Product product) {
-		this.productDao.saveAndFlush(product);
+	public void addProduct(ProductDto dto) {
+		this.productRepository.saveAndFlush(mappingUtils.mapToProductEntity(dto));
 	}
 
 	@Override
 	public void removeProduct(Long id) {
-		this.productDao.deleteById(id);
+		this.productRepository.deleteById(id);
 	}
 
 	@Override
-	public Product getProductById(Long id) {
-		return this.productDao.getReferenceById(id);
+	public ProductDto getProductById(Long id) {
+		Product entity = this.productRepository.getReferenceById(id);
+		return mappingUtils.mapToProductDto(entity);
 	}
 
 	@Override
-	public List<Product> getAll() {
-		return this.productDao.findAll();
+	public List<ProductDto> getAll() {
+		return productRepository.findAll().stream().map(mappingUtils::mapToProductDto).collect(Collectors.toList());
 	}
 }
