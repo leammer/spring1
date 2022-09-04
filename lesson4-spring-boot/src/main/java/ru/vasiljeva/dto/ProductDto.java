@@ -1,14 +1,14 @@
 package ru.vasiljeva.dto;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.NumberFormat;
 
 public class ProductDto {
 	private Long id;
-	@NotEmpty
+	@NotBlank
 	private String title;
-	@NotEmpty
+	@NotBlank
 	@Min(0)
 	@NumberFormat(pattern = "#.00")
 	private String price;
