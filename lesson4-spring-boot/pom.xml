@@ -8,9 +8,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.example</groupId>
-	<artifactId>lesson7-spring-data</artifactId>
+	<artifactId>lesson8-thymeleaf</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lesson7-spring-data</name>
+	<name>lesson8-thymeleaf</name>
 	<description>project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
