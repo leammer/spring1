@@ -11,5 +11,5 @@ public interface ProductService {
 
 	public ProductDto getProductById(Long id);
 
-	public List<ProductDto> getAll();
+	public List<ProductDto> getAll(double minPrice, double maxPrice);
 }

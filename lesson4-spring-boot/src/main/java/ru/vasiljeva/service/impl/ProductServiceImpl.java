@@ -3,8 +3,6 @@ package ru.vasiljeva.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +40,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDto> getAll() {
-		return productRepository.findAll().stream().map(mappingUtils::mapToProductDto).collect(Collectors.toList());
+	public List<ProductDto> getAll(double minPrice, double maxPrice) {
+		//@formatter:off
+		return this.productRepository
+				.findAll(minPrice, maxPrice)
+				.stream()
+				.map(mappingUtils::mapToProductDto)
+				.collect(Collectors.toList());
+		//@formatter:on
 	}
 }

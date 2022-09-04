@@ -12,3 +12,6 @@ curl -d '{"title":"new product", "price":"12.33"}' -H "Content-Type: application
 
 echo $'\n\nDelete product by id = 21\n'
 curl http://localhost:8090/app/products/delete/21
+
+echo $'\n\nGet products where 300 <= price <= 500'
+curl -v 'http://localhost:8090/app/products?minPrice=300&maxPrice=500'
