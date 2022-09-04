@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,9 +48,9 @@ public class ProductRestController {
 		service.removeProduct(id);
 	}
 
-	@ExceptionHandler
+	@ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorDto validationExceptionHandler(MethodArgumentNotValidException ex) {
+	public ErrorDto validationExceptionHandler(Exception ex) {
 		return new ErrorDto("Fix request", ex.getMessage());
 	}
 }

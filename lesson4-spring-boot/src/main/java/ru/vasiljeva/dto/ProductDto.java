@@ -2,16 +2,19 @@ package ru.vasiljeva.dto;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 public class ProductDto {
 	private Long id;
 	@NotBlank
 	private String title;
-	@NotBlank
+	@NotNull
 	@Min(0)
-	@NumberFormat(pattern = "#.00")
-	private String price;
+	@NumberFormat(style = Style.CURRENCY)
+	private Double price;
 
 	public ProductDto() {
 	}
@@ -32,11 +35,11 @@ public class ProductDto {
 		this.title = title;
 	}
 
-	public String getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
