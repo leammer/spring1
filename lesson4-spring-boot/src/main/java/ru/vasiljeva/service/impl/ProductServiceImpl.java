@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.vasiljeva.dto.ProductDto;
 import ru.vasiljeva.model.Product;
@@ -14,6 +15,7 @@ import ru.vasiljeva.service.MappingUtils;
 import ru.vasiljeva.service.ProductService;
 
 @Service
+@RequiredArgsConstructor
 @Setter
 public class ProductServiceImpl implements ProductService {
 

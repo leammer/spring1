@@ -49,6 +49,7 @@ public class ProductRestController {
 	}
 
 	@ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class })
+
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorDto validationExceptionHandler(Exception ex) {
 		return new ErrorDto("Fix request", ex.getMessage());

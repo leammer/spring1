@@ -9,10 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "Product")
+@Setter
+@Getter
+@NoArgsConstructor
 public class Product {
-
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,31 +29,4 @@ public class Product {
 
 	@Column(name = "price", precision = 10, scale = 2, nullable = true)
 	private BigDecimal cost;
-
-	public Product() {
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public BigDecimal getCost() {
-		return cost;
-	}
-
-	public void setCost(BigDecimal cost) {
-		this.cost = cost;
-	}
 }
