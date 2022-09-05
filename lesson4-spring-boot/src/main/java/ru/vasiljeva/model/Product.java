@@ -1,30 +1,53 @@
 package ru.vasiljeva.model;
 
-import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+@Entity
+@Table(name = "Product")
 public class Product {
 
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private @NotBlank String name;
+	@Column(name = "title", length = 30, nullable = false)
+	private String name;
 
-	private @NonNull Float cost;
+	@Column(name = "price", precision = 10, scale = 2, nullable = true)
+	private BigDecimal cost;
 
-	public Product(@NotBlank String name, @NonNull Float cost) {
-		super();
+	public Product() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
 		this.name = name;
+	}
+
+	public BigDecimal getCost() {
+		return cost;
+	}
+
+	public void setCost(BigDecimal cost) {
 		this.cost = cost;
 	}
 }
