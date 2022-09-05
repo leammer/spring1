@@ -1,5 +1,7 @@
 package ru.vasiljeva.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -14,10 +16,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import lombok.extern.slf4j.Slf4j;
+import ru.vasiljeva.dto.ProductDto;
 import ru.vasiljeva.exceptions.EntityNotFoundException;
-import ru.vasiljeva.model.Product;
 import ru.vasiljeva.service.ProductService;
 
 
@@ -27,25 +30,26 @@ import ru.vasiljeva.service.ProductService;
 public class ProductController {
 	Logger log = LoggerFactory.getLogger(ProductController.class);
 	
-	/*@Autowired
+	@Autowired
 	private ProductService service;
 
 	@GetMapping
-	public String getAll(Model model) {
+	public String getAll(
+			@RequestParam(required = false) Optional<Double> minPrice,
+			@RequestParam(required = false) Optional<Double> maxPrice, 
+			Model model) {
 		log.info("Get full product list");
-		model.addAttribute("products", service.getAll());
+		Double minPriceValue = minPrice.orElse(0.0);
+		Double maxPriceValue = maxPrice.orElse(Double.MAX_VALUE);
+		
+		model.addAttribute("products", service.getAll(minPriceValue, maxPriceValue));
 		return "product";
 	}
 
 	@GetMapping("/{id}")
 	public String getById(@PathVariable("id") Long id, Model model) {
 		log.info("Get product by id " + id);
-		Product product = service.getProductById(id);
-		if (product == null) {
-			throw new EntityNotFoundException("Couldn't find product by id " + id);
-		}
-		log.info("Product: " + product);
-		model.addAttribute("product", product);
+		model.addAttribute("product", service.getProductById(id));
 		return "product_form";
 	}
 
@@ -62,7 +66,7 @@ public class ProductController {
 	}
 
 	@PostMapping
-	public String save(@Valid Product product) {
+	public String save(@Valid ProductDto product) {
 		log.info("Save product" + product);
 		service.addProduct(product);
 		return "redirect:/product";
@@ -73,5 +77,5 @@ public class ProductController {
     public String notFoundExceptionHandler(Model model, EntityNotFoundException e) {
         model.addAttribute("message", e.getMessage());
         return "error_form";
-    }*/
+    }
 }

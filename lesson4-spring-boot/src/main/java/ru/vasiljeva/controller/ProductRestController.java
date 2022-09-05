@@ -1,6 +1,8 @@
 package ru.vasiljeva.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,13 @@ public class ProductRestController {
 	private ProductService service;
 
 	@GetMapping
-	public List<ProductDto> getAll(@RequestParam(required = false) double minPrice,
-			@RequestParam(required = false) double maxPrice) {
-		return service.getAll(minPrice, maxPrice);
+	public List<ProductDto> getAll(
+			@RequestParam(required = false) Optional<Double> minPrice,
+			@RequestParam(required = false) Optional<Double> maxPrice) {
+		Double minPriceValue = minPrice.orElse(0.0);
+		Double maxPriceValue = maxPrice.orElse(Double.MAX_VALUE);
+		
+		return service.getAll(minPriceValue, maxPriceValue);
 	}
 
 	@GetMapping("/{id}")
@@ -49,7 +55,6 @@ public class ProductRestController {
 	}
 
 	@ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class })
-
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorDto validationExceptionHandler(Exception ex) {
 		return new ErrorDto("Fix request", ex.getMessage());
