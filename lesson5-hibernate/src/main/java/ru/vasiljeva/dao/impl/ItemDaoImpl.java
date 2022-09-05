@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.vasiljeva.dao.ProductDao;
-import ru.vasiljeva.model.Product;
+import ru.vasiljeva.dao.ItemDao;
+import ru.vasiljeva.model.Item;
 
 @Repository
 @Slf4j
-public class ProductDaoImpl implements ProductDao {
+public class ItemDaoImpl implements ItemDao {
 
 	private SessionFactory sessionFactory;
 
@@ -26,47 +26,54 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Transactional
 	@Override
-	public void addProduct(Product product) {
+	public void addItem(Item item) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.persist(product);
-		log.info("Product added successfully. Product details: " + product);
+		session.persist(item);
+		log.info("Item added successfully. Item details: " + item);
+
 	}
 
 	@Transactional
 	@Override
-	public void updateProduct(Product product) {
+	public void updateItem(Item item) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.merge(product);
-		log.info("Product was updated. Product details: " + product);
+		session.merge(item);
+		log.info("Item was updated. Item details: " + item);
 	}
 
 	@Transactional
 	@Override
-	public void removeProduct(Long id) {
+	public void removeItem(Long id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		String sql = "DELETE FROM Product WHERE id = :id";
-		session.createQuery(sql).setParameter("id", id).executeUpdate();
-		log.info("Product was removed.");
+		Item item = (Item) session.load(Item.class, id);
+		if (item != null) {
+			session.remove(item);
+			log.info("Item was removed.");
+		}
+
+		log.info("Couldn't find Item by id " + id);
 	}
 
 	@Transactional
 	@Override
-	public Product getProductById(Long id) {
+	public Item getItemById(Long id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Product product = (Product) session.getReference(Product.class, id);
-		log.info("Product was found. Product details: " + product);
-		return product;
+		Item item = (Item) session.getReference(Item.class, id);
+		log.info("Item was found. Item details: " + item);
+		return item;
 	}
 
 	@Transactional
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Product> getAll() {
+	public List<Item> getAll() {
 		Session session = this.sessionFactory.getCurrentSession();
-		List<Product> list = session.createQuery("from Product", Product.class).list();
-		for (Product product : list) {
-			log.info("Product info: " + product);
+		List<Item> list = session.createQuery("from Item", Item.class).list();
+
+		for (Item item : list) {
+			log.info("Item info: " + item);
 		}
+
 		return list;
 	}
 

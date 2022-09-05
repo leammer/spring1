@@ -1,37 +1,37 @@
 package ru.vasiljeva.model;
 
-import java.math.BigDecimal;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @Entity
-@Table(name = "Product")
+@Table(name = "Customer")
 @NoArgsConstructor
-public class Product {
+public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "title", length = 30, nullable = false)
+	@Column(length = 30, nullable = false)
 	private String name;
 
-	@Column(name = "price", precision = 10, scale = 2, nullable = false)
-	private BigDecimal cost;
+	@OneToMany(mappedBy = "customer")
+	private Set<Item> items;
 
-	public Product(@NonNull String name, BigDecimal cost) {
-		super();
-		this.name = name;
-		this.cost = cost;
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", cart={" + items + "}]";
 	}
+
 }

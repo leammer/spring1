@@ -15,9 +15,15 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import ru.vasiljeva.dao.CustomerDao;
+import ru.vasiljeva.dao.ItemDao;
 import ru.vasiljeva.dao.ProductDao;
+import ru.vasiljeva.dao.impl.CustomerDaoImpl;
+import ru.vasiljeva.dao.impl.ItemDaoImpl;
 import ru.vasiljeva.dao.impl.ProductDaoImpl;
+import ru.vasiljeva.service.CartService;
 import ru.vasiljeva.service.ProductService;
+import ru.vasiljeva.service.impl.CartServiceImpl;
 import ru.vasiljeva.service.impl.ProductServiceImpl;
 
 @Configuration
@@ -92,11 +98,34 @@ public class AppConfig {
 		return dao;
 	}
 
-	/* Services */
+	@Bean
+	public CustomerDao customerDao() {
+		CustomerDaoImpl dao = new CustomerDaoImpl();
+		dao.setSessionFactory(sessionFactory().getObject());
+		return dao;
+	}
+
+	@Bean
+	public ItemDao itemDao() {
+		ItemDaoImpl dao = new ItemDaoImpl();
+		dao.setSessionFactory(sessionFactory().getObject());
+		return dao;
+	}
+
+	/* Services */   
 	@Bean
 	public ProductService productService() {
 		ProductServiceImpl service = new ProductServiceImpl();
 		service.setProductDao(productDao());
+		return service;
+	}
+	
+	@Bean
+	public CartService cartService() {
+		CartServiceImpl service = new CartServiceImpl();
+		service.setCustomerDao(customerDao());
+		service.setProductDao(productDao());
+		service.setItemDao(itemDao());
 		return service;
 	}
 }
