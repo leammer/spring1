@@ -1,8 +1,8 @@
 package ru.vasiljeva.controller;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
-
+import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ru.vasiljeva.dto.ErrorDto;
 import ru.vasiljeva.dto.ProductDto;
+import ru.vasiljeva.dto.SortValue;
 import ru.vasiljeva.service.ProductService;
 
 @RestController
@@ -31,27 +32,46 @@ public class ProductRestController {
 
 	@GetMapping
 	public List<ProductDto> getAll(
-			@RequestParam(required = false) Optional<Double> minPrice,
-			@RequestParam(required = false) Optional<Double> maxPrice) {
-		Double minPriceValue = minPrice.orElse(0.0);
-		Double maxPriceValue = maxPrice.orElse(Double.MAX_VALUE);
-		
-		return service.getAll(minPriceValue, maxPriceValue);
+	// @formatter:off
+			@RequestParam(required = false) SortValue sort,
+			@RequestParam(required = false) String search,
+			@RequestParam(required = false) Integer perSize,
+			@RequestParam(required = false) Integer minPrice,
+			@RequestParam(required = false) Integer maxPrice) {
+	// @formatter:on
+
+		Map<String, Object> params = new HashMap<>();
+		if (sort != null) {
+			params.put("sort", sort);
+		}
+		if (search != null) {
+			params.put("search", search);
+		}
+		if (perSize != null) {
+			params.put("perSize", perSize);
+		}
+		if (minPrice != null) {
+			params.put("minPrice", minPrice);
+		}
+		if (maxPrice != null) {
+			params.put("maxPrice", maxPrice);
+		}
+		return this.service.getAll(params);
 	}
 
 	@GetMapping("/{id}")
 	public ProductDto getById(@PathVariable Long id) {
-		return service.getProductById(id);
+		return this.service.getProductById(id);
 	}
 
 	@PostMapping
 	public void saveProduct(@RequestBody @Valid ProductDto request) {
-		service.addProduct(request);
+		this.service.addProduct(request);
 	}
 
 	@GetMapping("/delete/{id}")
 	public void deleteById(@PathVariable Long id) {
-		service.removeProduct(id);
+		this.service.removeProduct(id);
 	}
 
 	@ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class })

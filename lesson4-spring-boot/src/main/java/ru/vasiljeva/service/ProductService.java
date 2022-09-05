@@ -1,6 +1,7 @@
 package ru.vasiljeva.service;
 
 import java.util.List;
+import java.util.Map;
 
 import ru.vasiljeva.dto.ProductDto;
 
@@ -11,5 +12,5 @@ public interface ProductService {
 
 	public ProductDto getProductById(Long id);
 
-	public List<ProductDto> getAll(double minPrice, double maxPrice);
+	public List<ProductDto> getAll(Map<String, Object> params);
 }
