@@ -6,11 +6,11 @@ import org.springframework.util.MultiValueMap;
 import ru.vasiljeva.dto.ProductDto;
 
 public interface ProductService {
-	public void addProduct(ProductDto product);
+	void addProduct(ProductDto product);
 
-	public void removeProduct(Long id);
+	void removeProduct(Long id);
 
-	public ProductDto getProductById(Long id);
+	ProductDto getProductById(Long id);
 
-	public List<ProductDto> getAll(MultiValueMap<String, String> params);
+	List<ProductDto> getAll(MultiValueMap<String, String> params);
 }
