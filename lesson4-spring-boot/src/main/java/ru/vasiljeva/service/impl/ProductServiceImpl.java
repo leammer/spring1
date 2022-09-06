@@ -1,15 +1,14 @@
 package ru.vasiljeva.service.impl;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 
-import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -32,6 +31,11 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private MappingUtils mappingUtils;
 
+	@Autowired
+	private EntityManager em;
+
+	private int perSize = 10;
+
 	@Override
 	public void addProduct(ProductDto dto) {
 		this.productRepository.saveAndFlush(mappingUtils.mapToProductEntity(dto));
@@ -50,29 +54,58 @@ public class ProductServiceImpl implements ProductService {
 				.map(mappingUtils::mapToProductDto)
 				.orElseThrow(() -> new EntityNotFoundException("Couldn't find product by id " + id));
 		//@formatter:on
-
 	}
 
 	@Override
-	public List<ProductDto> getAll(Map<String, Object> params) {
+	public List<ProductDto> getAll(MultiValueMap<String, String> params) {
 		QProduct product = QProduct.product;
-		BooleanBuilder predicate = new BooleanBuilder();
+		JPAQuery<Product> query = new JPAQueryFactory(em).selectFrom(product);
 
 		if (params.containsKey("search")) {
-			predicate.and(product.name.containsIgnoreCase((String) params.get("search")));
+			query.where(product.name.containsIgnoreCase(params.getFirst("search")));
 		}
 		if (params.containsKey("minPrice")) {
-			predicate.and(product.cost.goe((Integer) params.get("minPrice")));
+			query.where(product.cost.goe(Integer.parseInt(params.getFirst("minPrice"))));
 		}
-
 		if (params.containsKey("maxPrice")) {
-			predicate.and(product.cost.loe((Integer) params.get("maxPrice")));
+			query.where(product.cost.loe(Integer.parseInt(params.getFirst("maxPrice"))));
 		}
 
-		Iterable<Product> list = this.productRepository.findAll(predicate);
-		//@formatter:off
-		return StreamSupport
-				.stream(list.spliterator(), false)
+		if (params.containsKey("sort")) {
+			String sortValue = params.getFirst("sort");
+			switch (sortValue) {
+			case "priceUp":
+				query.orderBy(product.cost.asc());
+				break;
+			case "priceDown":
+				query.orderBy(product.cost.desc());
+				break;
+			case "titleUp":
+				query.orderBy(product.name.asc());
+				break;
+			case "titleDown":
+				query.orderBy(product.name.desc());
+				break;
+			}
+		}
+
+		int page = 0;
+		if (params.containsKey("perSize")) {
+			this.perSize = Integer.parseInt(params.getFirst("perSize"));
+		}
+		if (params.containsKey("page")) {
+			page = Integer.parseInt(params.getFirst("page"));
+			if (page > 0) {
+				page -= 1;
+			}
+		}
+
+		//@formatter:off 
+		return query
+				.limit(perSize)
+				.offset(page * perSize)
+				.fetch()
+				.stream()
 				.map(mappingUtils::mapToProductDto)
 				.toList();
 		//@formatter:on

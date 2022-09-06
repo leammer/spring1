@@ -1,13 +1,12 @@
 package ru.vasiljeva.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ru.vasiljeva.dto.ErrorDto;
 import ru.vasiljeva.dto.ProductDto;
-import ru.vasiljeva.dto.SortValue;
 import ru.vasiljeva.service.ProductService;
 
 @RestController
@@ -31,31 +29,7 @@ public class ProductRestController {
 	private ProductService service;
 
 	@GetMapping
-	public List<ProductDto> getAll(
-	// @formatter:off
-			@RequestParam(required = false) SortValue sort,
-			@RequestParam(required = false) String search,
-			@RequestParam(required = false) Integer perSize,
-			@RequestParam(required = false) Integer minPrice,
-			@RequestParam(required = false) Integer maxPrice) {
-	// @formatter:on
-
-		Map<String, Object> params = new HashMap<>();
-		if (sort != null) {
-			params.put("sort", sort);
-		}
-		if (search != null) {
-			params.put("search", search);
-		}
-		if (perSize != null) {
-			params.put("perSize", perSize);
-		}
-		if (minPrice != null) {
-			params.put("minPrice", minPrice);
-		}
-		if (maxPrice != null) {
-			params.put("maxPrice", maxPrice);
-		}
+	public List<ProductDto> getAll(@RequestParam(required = false) MultiValueMap<String, String> params) {
 		return this.service.getAll(params);
 	}
 
