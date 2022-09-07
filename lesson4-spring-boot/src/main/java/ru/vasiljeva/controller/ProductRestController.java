@@ -1,9 +1,9 @@
 package ru.vasiljeva.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.MultiValueMap;
@@ -29,7 +29,7 @@ public class ProductRestController {
 	private ProductService service;
 
 	@GetMapping
-	public List<ProductDto> getAll(@RequestParam(required = false) MultiValueMap<String, String> params) {
+	public Page<ProductDto> getAll(@RequestParam(required = false) MultiValueMap<String, String> params) {
 		return this.service.getAll(params);
 	}
 

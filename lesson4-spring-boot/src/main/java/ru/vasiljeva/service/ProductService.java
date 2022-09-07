@@ -1,6 +1,6 @@
 package ru.vasiljeva.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.util.MultiValueMap;
 
 import ru.vasiljeva.dto.ProductDto;
@@ -12,5 +12,5 @@ public interface ProductService {
 
 	ProductDto getProductById(Long id);
 
-	List<ProductDto> getAll(MultiValueMap<String, String> params);
+	Page<ProductDto> getAll(MultiValueMap<String, String> params);
 }

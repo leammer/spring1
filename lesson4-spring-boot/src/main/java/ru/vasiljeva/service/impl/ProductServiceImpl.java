@@ -1,7 +1,7 @@
 package ru.vasiljeva.service.impl;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private MappingUtils mappingUtils;
 
-	private int perSize = 10;
+	private int pageSize = 10;
 
 	@Override
 	public void addProduct(ProductDto dto) {
@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDto> getAll(MultiValueMap<String, String> params) {
+	public Page<ProductDto> getAll(MultiValueMap<String, String> params) {
 		QProduct product = QProduct.product;
 		BooleanBuilder predicate = new BooleanBuilder();
 
@@ -85,8 +85,8 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		int page = 0;
-		if (params.containsKey("perSize")) {
-			this.perSize = Integer.parseInt(params.getFirst("perSize"));
+		if (params.containsKey("pageSize")) {
+			this.pageSize = Integer.parseInt(params.getFirst("pageSize"));
 		}
 		if (params.containsKey("page")) {
 			page = Integer.parseInt(params.getFirst("page"));
@@ -96,10 +96,9 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		//@formatter:off
-		return this.productRepository.findAll(predicate, PageRequest.of(page, perSize, sort))
-				.stream()
-				.map(mappingUtils::mapToProductDto)
-				.toList();
+		return this.productRepository
+				.findAll(predicate, PageRequest.of(page, this.pageSize, sort))
+				.map(mappingUtils::mapToProductDto);
 		//@formatter:on
 	}
 }
