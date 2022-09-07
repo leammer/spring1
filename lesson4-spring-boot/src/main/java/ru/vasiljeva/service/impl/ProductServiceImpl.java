@@ -1,20 +1,17 @@
 package ru.vasiljeva.service.impl;
 
 import java.util.List;
-import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
+import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.vasiljeva.dto.ProductDto;
 import ru.vasiljeva.exceptions.EntityNotFoundException;
-import ru.vasiljeva.model.Product;
 import ru.vasiljeva.model.QProduct;
 import ru.vasiljeva.repository.ProductRepository;
 import ru.vasiljeva.service.MappingUtils;
@@ -30,9 +27,6 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private MappingUtils mappingUtils;
-
-	@Autowired
-	private EntityManager em;
 
 	private int perSize = 10;
 
@@ -59,32 +53,33 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductDto> getAll(MultiValueMap<String, String> params) {
 		QProduct product = QProduct.product;
-		JPAQuery<Product> query = new JPAQueryFactory(em).selectFrom(product);
+		BooleanBuilder predicate = new BooleanBuilder();
 
 		if (params.containsKey("search")) {
-			query.where(product.name.containsIgnoreCase(params.getFirst("search")));
+			predicate.and(product.name.containsIgnoreCase(params.getFirst("search")));
 		}
 		if (params.containsKey("minPrice")) {
-			query.where(product.cost.goe(Integer.parseInt(params.getFirst("minPrice"))));
+			predicate.and(product.cost.goe(Integer.parseInt(params.getFirst("minPrice"))));
 		}
 		if (params.containsKey("maxPrice")) {
-			query.where(product.cost.loe(Integer.parseInt(params.getFirst("maxPrice"))));
+			predicate.and(product.cost.loe(Integer.parseInt(params.getFirst("maxPrice"))));
 		}
 
+		Sort sort = Sort.unsorted();
 		if (params.containsKey("sort")) {
 			String sortValue = params.getFirst("sort");
 			switch (sortValue) {
 			case "priceUp":
-				query.orderBy(product.cost.asc());
+				sort = Sort.by(Sort.Direction.ASC, "cost");
 				break;
 			case "priceDown":
-				query.orderBy(product.cost.desc());
+				sort = Sort.by(Sort.Direction.DESC, "cost");
 				break;
 			case "titleUp":
-				query.orderBy(product.name.asc());
+				sort = Sort.by(Sort.Direction.ASC, "name");
 				break;
 			case "titleDown":
-				query.orderBy(product.name.desc());
+				sort = Sort.by(Sort.Direction.DESC, "name");
 				break;
 			}
 		}
@@ -100,11 +95,8 @@ public class ProductServiceImpl implements ProductService {
 			}
 		}
 
-		//@formatter:off 
-		return query
-				.limit(perSize)
-				.offset(page * perSize)
-				.fetch()
+		//@formatter:off
+		return this.productRepository.findAll(predicate, PageRequest.of(page, perSize, sort))
 				.stream()
 				.map(mappingUtils::mapToProductDto)
 				.toList();
