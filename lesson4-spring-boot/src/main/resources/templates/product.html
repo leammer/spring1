@@ -89,7 +89,9 @@
 		</div>
 		<div class="row py-2">
 			<div class="col-sm-12 col-md-5">
-				<div role="status" aria-live="polite">Showing 1 to 10 of
+				<div role="status" aria-live="polite">Showing
+					[[${products.pageable.offset}+1]] to
+					[[${products.pageable.offset}+${products.numberOfElements}]] of
 					[[${products.totalElements}]] entries</div>
 			</div>
 			<div class="col-sm-12 col-md-7">
