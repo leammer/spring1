@@ -1,7 +1,7 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
@@ -35,29 +35,29 @@
 			<div class="col-12">
 				<a class="btn btn-primary" th:href="@{/product/new}">Add product</a>
 			</div>
-			<div class="row">
-				<div class="col-sm-12 col-md-6">
-					<div class="dataTables_length bs-select" id="dtBasicExample_length">
-						<label>Show <select name="dtBasicExample_length"
-							aria-controls="dtBasicExample"
-							class="custom-select custom-select-sm form-control form-control-sm"><option
-									value="10">10</option>
-								<option value="25">25</option>
-								<option value="50">50</option>
-								<option value="100">100</option></select>
-						</label>
-					</div>
-				</div>
-				<div class="col-sm-12 col-md-6">
-					<div id="dtBasicExample_filter" class="dataTables_filter">
-						<label>Search:<input type="search"
-							class="form-control form-control-sm" placeholder=""
-							aria-controls="dtBasicExample"></label>
-					</div>
-				</div>
+		</div>
+		<div class="row py-2">
+			<div class="col-sm-4 col-md-2">
+				<label class="input-group">Show <select
+					class="custom-select custom-select-sm"
+					data-th-onchange="@{/product(page=0, pageSize=30)}">
+						<option value="10" selected="selected">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+				</select>
+				</label>
 			</div>
+			<div class="col-sm-8 col-md-10 input-group">
+				<label class="input-group">Search: <input type="search"
+					class="form-control form-control-sm" placeholder=""
+					data-th-onclick="@{/product?search='aaa'}">
+				</label>
+			</div>
+		</div>
+		<div class="row py-2">
 			<div class="col-12">
-				<table class="table table-bordered my-2">
+				<table class="table table-bordered table-hover my-2">
 					<thead>
 						<tr>
 							<th scope="col">Id</th>
@@ -67,15 +67,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="product : ${products}">
-							<th scope="row" th:text="${product.id}">1</th>
-							<td th:text="${product.title}">Milk</td>
-							<td th:text="${product.price}">1.00</td>
+						<tr data-th-each="product : ${products}">
+							<th scope="row" data-th-text="${product.id}">1</th>
+							<td data-th-text="${product.title}">Milk</td>
+							<td data-th-text="${product.price}">1.00</td>
 							<td><a class="btn btn-success"
-								th:href="@{/product/{id}(id = ${product.id})}"><i
+								data-th-href="@{/product/{id}(id = ${product.id})}"><i
 									class="fas fa-edit"></i></a>
-								<form class="d-inline" th:method="delete"
-									th:action="@{/product/{id}/(id = ${product.id})}">
+								<form class="d-inline" data-th-method="delete"
+									data-th-action="@{/product/{id}/(id = ${product.id})}">
 									<button class="btn btn-danger">
 										<i class="far fa-trash-alt"></i>
 									</button>
@@ -84,36 +84,28 @@
 					</tbody>
 				</table>
 			</div>
+		</div>
+		<div class="row py-2">
+			<div class="col-sm-12 col-md-5">
+				<div role="status" aria-live="polite">Showing
+					1 to 10 of [[${products.totalElements}]] entries</div>
+			</div>
+			<div class="col-sm-12 col-md-7">
+				<ul class="pagination">
+					<li class="paginate_button page-item previous disabled"><a
+						href="#" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
 
-			<div class="row">
-				<div class="col-sm-12 col-md-5">
-					<div class="dataTables_info" id="dtBasicExample_info" role="status"
-						aria-live="polite">Showing 1 to 10 of 57 entries</div>
-				</div>
-				<div class="col-sm-12 col-md-7">
-					<div class="dataTables_paginate paging_simple_numbers"
-						id="dtBasicExample_paginate">
-						<ul class="pagination">
-							<li class="paginate_button page-item previous disabled"
-								id="dtBasicExample_previous"><a href="#"
-								aria-controls="dtBasicExample" data-dt-idx="0" tabindex="0"
-								class="page-link">Previous</a></li>
+					<li class="paginate_button page-item"
+						th:each="num : ${#numbers.sequence(1, products.totalPages)}"
+						th:classappend="${num == products.number + 1} ? 'active'"><a
+						class="page-link"
+						th:href="@{/product(page=${num}, pageSize=${products.size})}">[[${num}]]
+							<span th:if="${num == products.number + 1}" class="sr-only">(current)</span>
+					</a></li>
 
-							<li class="paginate_button page-item"
-								th:each="num : ${#numbers.sequence(1, products.totalPages)}"
-								th:classappend="${num == products.number + 1} ? 'active'"
-								class="page-item"><a class="page-link"
-								th:href="@{/product(page=${num}, size=${products.size})}">[[${num}]]
-									<span th:if="${num == products.number + 1}" class="sr-only">(current)</span>
-							</a></li>
-
-							<li class="paginate_button page-item next"
-								id="dtBasicExample_next"><a href="#"
-								aria-controls="dtBasicExample" data-dt-idx="7" tabindex="0"
-								class="page-link">Next</a></li>
-						</ul>
-					</div>
-				</div>
+					<li class="paginate_button page-item next"><a href="#"
+						data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
