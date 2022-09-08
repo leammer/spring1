@@ -18,10 +18,8 @@
 </head>
 
 <body>
-
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">Grocery EShop</a>
-
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -38,21 +36,25 @@
 		</div>
 		<div class="row py-2">
 			<div class="col-sm-4 col-md-2">
-				<label class="input-group">Show <select
-					class="custom-select custom-select-sm"
-					data-th-onchange="@{/product(page=0, pageSize=30)}">
-						<option value="10" selected="selected">10</option>
-						<option value="25">25</option>
-						<option value="50">50</option>
-						<option value="100">100</option>
-				</select>
-				</label>
+				<form class="form-inline">
+					<label for="pageSizeSelector">Show:</label> <select
+						th:with="pageSizeList = ${ {10,20,50,100} }" id="pageSizeSelector"
+						name="pageSize" class="custom-select custom-select-sm"
+						onchange="this.form.submit()">
+						<option th:each="i : ${pageSizeList} " th:value="${i}"
+							th:text="${i}" th:selected="${i==products.size}"></option>
+					</select>
+				</form>
 			</div>
-			<div class="col-sm-8 col-md-10 input-group">
-				<label class="input-group">Search: <input type="search"
-					class="form-control form-control-sm" placeholder=""
-					data-th-onclick="@{/product?search='aaa'}">
-				</label>
+			<div class="col-sm-8 col-md-10">
+				<form class="form-inline">
+					<div class="form-group mb-2 mr-2">
+						<label for="titleFilter">Search: </label> <input type="text"
+							class="form-control" id="titleFilter" name="search"
+							placeholder="Product title filter">
+					</div>
+					<button type="submit" class="btn btn-primary mb-2">OK</button>
+				</form>
 			</div>
 		</div>
 		<div class="row py-2">
@@ -87,8 +89,8 @@
 		</div>
 		<div class="row py-2">
 			<div class="col-sm-12 col-md-5">
-				<div role="status" aria-live="polite">Showing
-					1 to 10 of [[${products.totalElements}]] entries</div>
+				<div role="status" aria-live="polite">Showing 1 to 10 of
+					[[${products.totalElements}]] entries</div>
 			</div>
 			<div class="col-sm-12 col-md-7">
 				<ul class="pagination">
@@ -123,5 +125,6 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
+
 </body>
 </html>
