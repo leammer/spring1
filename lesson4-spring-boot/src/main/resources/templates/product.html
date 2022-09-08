@@ -87,17 +87,18 @@
 				</table>
 			</div>
 		</div>
-		<div class="row py-2">
+		<div class="row py-2"
+			th:with="total = ${products.totalElements}, from = ${products.pageable.offset}+1 , to=${products.pageable.offset}+${products.numberOfElements}">
 			<div class="col-sm-12 col-md-5">
-				<div role="status" aria-live="polite">Showing
-					[[${products.pageable.offset}+1]] to
-					[[${products.pageable.offset}+${products.numberOfElements}]] of
-					[[${products.totalElements}]] entries</div>
+				<div role="status" aria-live="polite">Showing [[${from}]] to
+					[[${to}]] of [[${total}]] entries</div>
 			</div>
 			<div class="col-sm-12 col-md-7">
 				<ul class="pagination">
-					<li class="paginate_button page-item previous disabled"><a
-						href="#" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+					<li class="paginate_button page-item previous"
+						th:classappend="${products.number == 0}? 'disabled'"><a
+						th:href="@{/product(page=${products.number}, pageSize=${products.size})}"
+						class="page-link">Previous</a></li>
 
 					<li class="paginate_button page-item"
 						th:each="num : ${#numbers.sequence(1, products.totalPages)}"
@@ -107,8 +108,10 @@
 							<span th:if="${num == products.number + 1}" class="sr-only">(current)</span>
 					</a></li>
 
-					<li class="paginate_button page-item next"><a href="#"
-						data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+					<li class="paginate_button page-item next"
+						th:classappend="${products.number + 1 >= products.totalPages}? 'disabled'"><a
+						th:href="@{/product(page=${products.number + 2}, pageSize=${products.size})}"
+						class="page-link">Next</a></li>
 				</ul>
 			</div>
 		</div>
