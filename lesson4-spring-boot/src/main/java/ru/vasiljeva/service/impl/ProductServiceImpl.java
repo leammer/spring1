@@ -58,10 +58,10 @@ public class ProductServiceImpl implements ProductService {
 		if (params.containsKey("search")) {
 			predicate.and(product.name.containsIgnoreCase(params.getFirst("search")));
 		}
-		if (params.containsKey("minPrice")) {
+		if (params.containsKey("minPrice") && !params.getFirst("minPrice").isBlank()) {
 			predicate.and(product.cost.goe(Integer.parseInt(params.getFirst("minPrice"))));
 		}
-		if (params.containsKey("maxPrice")) {
+		if (params.containsKey("maxPrice")&& !params.getFirst("maxPrice").isBlank()) {
 			predicate.and(product.cost.loe(Integer.parseInt(params.getFirst("maxPrice"))));
 		}
 
