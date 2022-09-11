@@ -15,18 +15,19 @@
 					<div class="form-group">
 						<label>Title</label> <input th:field="*{title}" type="text"
 							class="form-control" id="title" name="title"
-							placeholder="Enter title">
+							th:placeholder="#{placeholder.product.update.title}">
 						<p class="text-danger" th:if="${#fields.hasErrors('title')}"
 							th:errors="*{title}"></p>
 					</div>
 					<div class="form-group">
 						<label>Cost</label> <input th:field="*{price}" type="text"
 							class="form-control" id="cost" name="price"
-							placeholder="Enter cost">
+							th:placeholder="#{placeholder.product.update.cost}">
 						<p class="text-danger" th:if="${#fields.hasErrors('price')}"
 							th:errors="*{price}"></p>
 					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="submit" class="btn btn-primary"
+						th:text="#{product.update.submit}">Submit</button>
 				</form>
 			</div>
 		</div>

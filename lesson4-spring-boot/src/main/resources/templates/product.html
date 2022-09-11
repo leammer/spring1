@@ -9,13 +9,13 @@
 	<div class="container">
 		<div class="row py-2">
 			<div class="col-12">
-				<a class="btn btn-primary" th:href="@{/product/new}">Add product</a>
+				<a class="btn btn-primary" th:href="@{/product/new}" th:text="#{product.add}">Add product</a>
 			</div>
 		</div>
 		<div class="row py-2">
 			<div class="col-sm-4 col-md-2">
 				<form class="form-inline">
-					<label for="pageSizeSelector" class="mb-2 mr-2">Show:</label> <select
+					<label for="pageSizeSelector" class="mb-2 mr-2" th:text="#{product.show}">Show:</label> <select
 						th:with="pageSizeList = ${ {10,20,50,100} }" id="pageSizeSelector"
 						name="pageSize" class="custom-select custom-select-sm"
 						onchange="this.form.submit()">
@@ -29,21 +29,21 @@
 					th:action="@{/product__(${#strings.isEmpty(search)} ? '' : ('search=' + ${search}))__}">
 
 					<div class="form-group mb-2 mr-2">
-						<label for="minPriceFilter" class="mr-2">Min price: </label> <input
+						<label for="minPriceFilter" class="mr-2" th:text="#{product.minPrice}">Min price: </label> <input
 							type="number" class="form-control" id="minPriceFilter"
-							th:name="minPrice" placeholder="Min price">
+							th:name="minPrice" th:placeholder="#{placeholder.minPrice}">
 					</div>
 					<div class="form-group mb-2 mr-2">
-						<label for="maxPriceFilter" class="mr-2">Max price: </label> <input
+						<label for="maxPriceFilter" class="mr-2" th:text="#{product.maxPrice}">Max price: </label> <input
 							type="number" class="form-control" id="maxPriceFilter"
-							th:name="maxPrice" placeholder="Max price">
+							th:name="maxPrice" th:placeholder="#{placeholder.maxPrice}">
 					</div>
 					<div class="form-group mb-2 mr-2">
-						<label for="titleFilter" class="mr-2">Search: </label> <input
+						<label for="titleFilter" class="mr-2" th:text="#{product.search}">Search: </label> <input
 							type="text" class="form-control" id="titleFilter"
-							th:name="search" placeholder="Product title">
+							th:name="search" th:placeholder="#{placeholder.search}">
 					</div>
-					<button type="submit" class="btn btn-primary mb-2">OK</button>
+					<button type="submit" class="btn btn-primary mb-2" th:text="#{product.ok}">OK</button>
 				</form>
 			</div>
 		</div>
@@ -52,10 +52,10 @@
 				<table class="table table-bordered table-hover my-2">
 					<thead>
 						<tr>
-							<th scope="col">Id</th>
-							<th scope="col">Title</th>
-							<th scope="col">Cost</th>
-							<th scope="col">Actions</th>
+							<th scope="col" th:text="#{product.id}">Id</th>
+							<th scope="col" th:text="#{product.title}">Title</th>
+							<th scope="col" th:text="#{product.cost}">Cost</th>
+							<th scope="col" th:text="#{product.actions}">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -80,15 +80,14 @@
 		<div class="row py-2"
 			th:with="total = ${products.totalElements}, from = ${products.pageable.offset}+1 , to=${products.pageable.offset}+${products.numberOfElements}">
 			<div class="col-sm-12 col-md-5">
-				<div role="status" aria-live="polite">Showing [[${from}]] to
-					[[${to}]] of [[${total}]] entries</div>
+				<div role="status" aria-live="polite" th:text="#{product.status(${from},${to},${total})}"></div>
 			</div>
 			<div class="col-sm-12 col-md-7">
 				<ul class="pagination">
 					<li class="paginate_button page-item previous"
 						th:classappend="${products.number == 0}? 'disabled'"><a
 						th:href="@{/product(page=${products.number}, pageSize=${products.size})}"
-						class="page-link">Previous</a></li>
+						class="page-link" th:text="#{product.previous}">Previous</a></li>
 
 					<li class="paginate_button page-item"
 						th:each="num : ${#numbers.sequence(1, products.totalPages)}"
@@ -101,7 +100,7 @@
 					<li class="paginate_button page-item next"
 						th:classappend="${products.number + 1 >= products.totalPages}? 'disabled'"><a
 						th:href="@{/product(page=${products.number + 2}, pageSize=${products.size})}"
-						class="page-link">Next</a></li>
+						class="page-link" th:text="#{product.next}">Next</a></li>
 				</ul>
 			</div>
 		</div>
