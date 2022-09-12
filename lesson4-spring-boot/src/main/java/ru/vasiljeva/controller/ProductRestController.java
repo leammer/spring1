@@ -1,11 +1,12 @@
 package ru.vasiljeva.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,24 +29,23 @@ public class ProductRestController {
 	private ProductService service;
 
 	@GetMapping
-	public List<ProductDto> getAll(@RequestParam(required = false) double minPrice,
-			@RequestParam(required = false) double maxPrice) {
-		return service.getAll(minPrice, maxPrice);
+	public Page<ProductDto> getAll(@RequestParam(required = false) MultiValueMap<String, String> params) {
+		return this.service.getAll(params);
 	}
 
 	@GetMapping("/{id}")
 	public ProductDto getById(@PathVariable Long id) {
-		return service.getProductById(id);
+		return this.service.getProductById(id);
 	}
 
 	@PostMapping
 	public void saveProduct(@RequestBody @Valid ProductDto request) {
-		service.addProduct(request);
+		this.service.addProduct(request);
 	}
 
 	@GetMapping("/delete/{id}")
 	public void deleteById(@PathVariable Long id) {
-		service.removeProduct(id);
+		this.service.removeProduct(id);
 	}
 
 	@ExceptionHandler({ MethodArgumentNotValidException.class, HttpMessageNotReadableException.class })
