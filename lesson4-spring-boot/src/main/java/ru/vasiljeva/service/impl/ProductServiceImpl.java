@@ -14,8 +14,8 @@ import ru.vasiljeva.dto.ProductDto;
 import ru.vasiljeva.exceptions.EntityNotFoundException;
 import ru.vasiljeva.model.QProduct;
 import ru.vasiljeva.repository.ProductRepository;
-import ru.vasiljeva.service.MappingUtils;
 import ru.vasiljeva.service.ProductService;
+import ru.vasiljeva.utils.MappingUtils;
 import ru.vasiljeva.utils.SortingParameter;
 
 @Service
