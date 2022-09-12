@@ -37,8 +37,8 @@ public class ProductServiceImpl implements ProductService {
 	private MappingUtils mappingUtils;
 
 	@Override
-	public void addProduct(ProductDto dto) {
-		this.productRepository.saveAndFlush(mappingUtils.mapToProductEntity(dto));
+	public ProductDto addProduct(ProductDto dto) {
+		return mappingUtils.mapToProductDto(this.productRepository.saveAndFlush(mappingUtils.mapToProductEntity(dto)));
 	}
 
 	@Override

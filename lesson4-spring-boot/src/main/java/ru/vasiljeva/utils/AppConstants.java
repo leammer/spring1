@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public final class AppConstants {
 	public static final String MVC_CONTROLLER_MAPPING = "/product";
+	public static final String REST_CONTROLLER_MAPPING = "/app/products";
 	public static final String BY_ID = "/{id}";
 	public static final String NEW = "/new";
 
