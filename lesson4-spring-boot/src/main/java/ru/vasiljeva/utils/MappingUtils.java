@@ -1,4 +1,4 @@
-package ru.vasiljeva.service;
+package ru.vasiljeva.utils;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
