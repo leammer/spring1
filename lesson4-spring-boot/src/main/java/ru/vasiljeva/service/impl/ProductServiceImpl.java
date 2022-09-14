@@ -11,7 +11,8 @@ import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.vasiljeva.dto.ProductDto;
-import ru.vasiljeva.exceptions.EntityNotFoundException;
+import ru.vasiljeva.exceptions.ExceptionType;
+import ru.vasiljeva.exceptions.ServiceException;
 import ru.vasiljeva.model.QProduct;
 import ru.vasiljeva.repository.ProductRepository;
 import ru.vasiljeva.service.ProductService;
@@ -52,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 		return this.productRepository
 				.findById(id)
 				.map(mappingUtils::mapToProductDto)
-				.orElseThrow(() -> new EntityNotFoundException("Couldn't find product by id " + id));
+				.orElseThrow(() -> new ServiceException(ExceptionType.NOT_FOUND, "product", "id=" + id, ""));
 		//@formatter:on
 	}
 

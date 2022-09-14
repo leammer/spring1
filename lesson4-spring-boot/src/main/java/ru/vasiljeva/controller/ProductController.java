@@ -2,7 +2,6 @@ package ru.vasiljeva.controller;
 
 import static ru.vasiljeva.utils.AppConstants.BY_ID;
 import static ru.vasiljeva.utils.AppConstants.MODEL_ATTRIBUTE_ALL_PRODUCTS;
-import static ru.vasiljeva.utils.AppConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE;
 import static ru.vasiljeva.utils.AppConstants.MODEL_ATTRIBUTE_PRODUCT;
 import static ru.vasiljeva.utils.AppConstants.MVC_CONTROLLER_MAPPING;
 import static ru.vasiljeva.utils.AppConstants.NEW;
@@ -12,23 +11,18 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import lombok.extern.slf4j.Slf4j;
 import ru.vasiljeva.dto.ProductDto;
-import ru.vasiljeva.exceptions.EntityNotFoundException;
 import ru.vasiljeva.service.ProductService;
 
 @Controller
@@ -71,12 +65,5 @@ public class ProductController {
 		log.info("Save product" + request);
 		this.service.addProduct(request);
 		return "redirect:/product";
-	}
-
-	@ExceptionHandler
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public String notFoundExceptionHandler(Model model, EntityNotFoundException e) {
-		model.addAttribute(MODEL_ATTRIBUTE_ERROR_MESSAGE, e.getMessage());
-		return "error_form";
 	}
 }
