@@ -1,7 +1,7 @@
 package ru.vasiljeva.controller;
 
 import static ru.vasiljeva.utils.AppConstants.BY_ID;
-import static ru.vasiljeva.utils.AppConstants.REST_CONTROLLER_MAPPING;
+import static ru.vasiljeva.utils.AppConstants.REST_PRODUCT_CONTROLLER_MAPPING;
 
 import javax.validation.Valid;
 
@@ -21,7 +21,7 @@ import ru.vasiljeva.dto.ProductDto;
 import ru.vasiljeva.service.ProductService;
 
 @RestController
-@RequestMapping(REST_CONTROLLER_MAPPING)
+@RequestMapping(REST_PRODUCT_CONTROLLER_MAPPING)
 public class ProductRestController {
 	@Autowired
 	private ProductService service;
