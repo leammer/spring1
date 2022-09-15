@@ -1,8 +1,8 @@
 package ru.vasiljeva.dto;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,8 +10,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class CartDto {
 	private Long id;
-	private Set<ItemDto> items;
+	private Set<ItemDto> cart;
+
+	public CartDto(Long id) {
+		this.id = id;
+		this.cart = new HashSet<ItemDto>();
+	}
 }

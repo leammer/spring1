@@ -2,6 +2,7 @@ package ru.vasiljeva.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,7 @@ public class Cart {
 	@JoinColumn(name = "customer_id", referencedColumnName = "id")
 	private Customer customer;
 
-	@OneToMany(mappedBy = "cart")
+	@OneToMany(mappedBy = "cart", cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE }, orphanRemoval = true)
 	private Set<Item> items;
 }

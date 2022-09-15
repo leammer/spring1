@@ -1,5 +1,8 @@
 package ru.vasiljeva.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +17,7 @@ public class ItemDto {
 	private Long id;
 
 	@JsonProperty("product_id")
+	@NotNull
 	private Long productId;
 	@JsonProperty("title")
 	private String productTitle;
@@ -21,5 +25,7 @@ public class ItemDto {
 	private Double productPrice;
 
 	@JsonProperty("amount")
+	@NotNull
+	@Min(0)
 	private Long quantity;
 }

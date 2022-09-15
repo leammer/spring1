@@ -34,5 +34,9 @@ public interface MappingUtils {
 
 	Customer mapToCustomerEntity(PersonalInfoDto dto);
 
+	@Mapping(target = "cart", source = "entity.items")
 	CartDto mapToCartDto(Cart entity);
+
+	@Mapping(target = "items", source = "dto.cart")
+	Cart mapToCartEntity(CartDto dto);
 }
