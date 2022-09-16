@@ -1,0 +1,53 @@
+<div class="row py-2">
+	<div class="col-12">
+		<a class="btn btn-primary" (click)="addProductHandler()">Add
+			product</a>
+	</div>
+</div>
+<app-filters></app-filters>
+<div class="row py-2">
+	<div class="col-12">
+		<table class="table table-bordered table-hover my-2">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Title</th>
+					<th scope="col">Cost</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let product of products">
+					<th scope="row">{{product.id}}</th>
+					<td>{{product.name}}</td>
+					<td>{{product.price}}</td>
+					<td><a class="btn btn-success"><i class="fas fa-edit"></i></a>
+						<form class="d-inline">
+							<button class="btn btn-danger">
+								<i class="far fa-trash-alt"></i>
+							</button>
+						</form></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row py-2">
+	<div class="col-sm-12 col-md-5">
+		<div role="status" aria-live="polite">Some text</div>
+	</div>
+	<div class="col-sm-12 col-md-7">
+		<ul class="pagination">
+			<li class="paginate_button page-item previous"><a
+				class="page-link">Previous</a></li>
+
+			<li class="paginate_button page-item"><a class="page-link">1</a></li>
+			<li class="paginate_button page-item"><a class="page-link">2</a></li>
+			<li class="paginate_button page-item"><a class="page-link">3</a></li>
+
+			<li class="paginate_button page-item next"><a class="page-link">Next</a></li>
+		</ul>
+	</div>
+</div>
+
+
