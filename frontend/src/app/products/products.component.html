@@ -21,12 +21,8 @@
 					<th scope="row">{{product.id}}</th>
 					<td>{{product.title}}</td>
 					<td>{{product.price}}</td>
-					<td><a class="btn btn-success"><i class="fas fa-edit"></i></a>
-						<form class="d-inline">
-							<button class="btn btn-danger">
-								<i class="far fa-trash-alt"></i>
-							</button>
-						</form></td>
+					<td><a class="btn btn-success" (click)="updateProductHandler(product)">Edit</a>
+						<a class="btn btn-danger" (click)="deleteProductHandler(product.id)">Delete</a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -34,16 +30,16 @@
 </div>
 <div class="row py-2">
 	<div class="col-sm-12 col-md-5">
-		<div role="status" aria-live="polite">Some text</div>
+		<div role="status" aria-live="polite">Showing {{fromEntity}} to
+			{{toEntity}} of {{totalElements}} entries</div>
 	</div>
 	<div class="col-sm-12 col-md-7">
 		<ul class="pagination">
 			<li class="paginate_button page-item previous"><a
 				class="page-link">Previous</a></li>
 
-			<li class="paginate_button page-item"><a class="page-link">1</a></li>
-			<li class="paginate_button page-item"><a class="page-link">2</a></li>
-			<li class="paginate_button page-item"><a class="page-link">3</a></li>
+			<li class="paginate_button page-item" *ngFor="let i of paginator"><a
+				class="page-link">{{i}}</a></li>
 
 			<li class="paginate_button page-item next"><a class="page-link">Next</a></li>
 		</ul>
