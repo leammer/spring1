@@ -1,8 +1,19 @@
 <!-- Toolbar -->
-<div class="toolbar" role="banner">
-	<span>Welcome</span>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<a class="navbar-brand" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/">EShop</a>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/app/products">Catalog</a></li>
+			<li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/app/cart">Cart</a></li>
+			<li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/app/personal">Profile</a></li>
+		</ul>
+	</div>
+
+	<div><button class="btn btn-primary">Log in</button>
+	</div>
+</nav>
 
 <div class="container">
-	<app-products></app-products>
+	<router-outlet></router-outlet>
 </div>
