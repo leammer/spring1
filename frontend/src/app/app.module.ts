@@ -11,6 +11,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { ProductInfoComponent } from './products/product-info/product-info.component';
+import { CartComponent } from './cart/cart.component';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
@@ -20,14 +22,15 @@ import { ProductInfoComponent } from './products/product-info/product-info.compo
     FiltersComponent,
     ProfileComponent,
     WelcomePageComponent,
-    ProductInfoComponent
+    ProductInfoComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [ProductService],
+  providers: [ProductService, AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
