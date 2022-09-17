@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import static ru.vasiljeva.utils.AppConstants.BY_ID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import ru.vasiljeva.dto.ItemDto;
 import ru.vasiljeva.service.CartService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(REST_CART_CONTROLLER_MAPPING)
 public class CartRestController {
 	@Autowired
