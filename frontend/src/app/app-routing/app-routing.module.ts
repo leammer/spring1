@@ -6,19 +6,23 @@ import { ProductsComponent } from '../products/products.component';
 import { ProductComponent } from '../products/product/product.component';
 import { ProfileComponent } from '../profile/profile.component';
 import { WelcomePageComponent } from '../welcome-page/welcome-page.component';
+import { ProductInfoComponent } from '../products/product-info/product-info.component';
 
 const appRoutes: Routes = [
   {
     path: "",
     component: WelcomePageComponent
   }, {
-    path: "app/products",
+    path: "catalog",
     component: ProductsComponent
   }, {
-    path: "app/products/:id",
+    path: "info/:id",
+    component: ProductInfoComponent
+  }, {
+    path: "edit/:id",
     component: ProductComponent
   }, {
-    path: "app/personal",
+    path: "profile",
     component: ProfileComponent
   }
 ]

@@ -10,6 +10,7 @@ import { ProductService } from './products/product.service';
 import { ProfileComponent } from './profile/profile.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { ProductInfoComponent } from './products/product-info/product-info.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
     ProductComponent,
     FiltersComponent,
     ProfileComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    ProductInfoComponent
   ],
   imports: [
     BrowserModule,

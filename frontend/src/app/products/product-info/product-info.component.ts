@@ -5,11 +5,11 @@ import { ProductService } from '../product.service';
 import { Product } from '../product'
 
 @Component({
-  selector: '[app-product]',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  selector: 'app-product-info',
+  templateUrl: './product-info.component.html',
+  styleUrls: ['./product-info.component.css']
 })
-export class ProductComponent implements OnInit {
+export class ProductInfoComponent implements OnInit {
 
   id: number = 0;
   product: Product = {title: '', price: 0 };
@@ -23,5 +23,4 @@ export class ProductComponent implements OnInit {
          this.product = product;
       });
   }
-
 }

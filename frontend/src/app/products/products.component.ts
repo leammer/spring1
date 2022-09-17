@@ -39,7 +39,7 @@ export class ProductsComponent implements OnInit {
 	  //this.products.push({id:4, name:'Meat', price:40});
   }
   
-  updateProductHandler(product: Product) {
+  addProductToCartHandler(id: any) {
      /*
     this.producrService.updateProduct(id)
       .subscribe( (product: Products) => { 
