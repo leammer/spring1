@@ -13,6 +13,7 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { ProductInfoComponent } from './products/product-info/product-info.component';
 import { CartComponent } from './cart/cart.component';
 import { AppService } from './app.service';
+import { CartService } from './cart/cart.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { AppService } from './app.service';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [ProductService, AppService],
+  providers: [ProductService, AppService, CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
