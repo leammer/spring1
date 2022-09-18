@@ -23,4 +23,8 @@ export class CartComponent implements OnInit {
 			});
 	}
 
+	getTotal() {
+		const sum = this.content.reduce((sum, item) => sum + item.price * item.quantity, 0);
+		return sum;
+	}
 }

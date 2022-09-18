@@ -1,35 +1,46 @@
-<div class="row py-2">
-  <div class="col-sm-4 col-md-2">
-    <div class="form-inline">
-      <label class="mb-2 mr-2">Show:&nbsp;</label> <select
-        class="custom-select custom-select-sm"
-        (change)="amountEntitiesHandler($any($event.target).value)">
-        <option *ngFor="let opt of amountEntities">{{opt}}</option>
-      </select>
-    </div>
-  </div>
-  <div class="col-sm-8 col-md-10">
-    <div class="form-inline">
-      <div class="row mb-2 mr-2">
-        <label class=" col-sm-4 col-md-5 mr-2 ">Min price: <input
-          type="number"
-          placeholder="Enter min price"
-          (keyup.enter)="minPriceFilterHandler($any($event.target).value)"></label> <label
-          class="col-sm-4 col-md-5 mr-2">Max price: <input
-          type="number"
-          placeholder="Enter max price"
-          (keyup.enter)="maxPriceFilterHandler($any($event.target).value)"></label>
-      </div>
-      <div class="form-group mb-2 mr-2">
-        <label class="mr-2">Search: </label> <input
+<form>
+  <div class="row">
+    <div class="col">
+      <div class="input-group mb-3">
+        <label class="mr-2">Search:&nbsp;&nbsp;</label>
+        <input
           type="text"
           class="form-control"
           placeholder="I find..."
           (keyup.enter)="searchFilterHandler($any($event.target).value)">
       </div>
-      <button
-        class="btn btn-primary mb-2"
-        (click)="allFilterHandler()">OK</button>
     </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col-sm">
+      <div class="input-group mb-3">
+        <label>Min price:&nbsp;&nbsp;</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Enter min price"
+          (keyup.enter)="minPriceFilterHandler($any($event.target).value)">
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="input-group mb-3">
+        <label> Max price:&nbsp;&nbsp;</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Enter max price"
+          (keyup.enter)="maxPriceFilterHandler($any($event.target).value)">
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="input-group mb-3">
+        <label>Show:&nbsp;&nbsp;</label>
+        <select
+          class="custom-select form-control"
+          (change)="amountEntitiesHandler($any($event.target).value)">
+          <option *ngFor="let opt of amountEntities">{{opt}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</form>

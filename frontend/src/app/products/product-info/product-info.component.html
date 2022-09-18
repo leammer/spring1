@@ -1,20 +1,25 @@
-<div class="container">
-  <h2>Product info</h2>
-  <div class="row py-2">
-    <div class="col-12">
-      <hr>
-      <div class="form-group">
-        <div>
-          <label>Title:&nbsp;&nbsp;{{product.title}}</label>
-        </div>
-        <div>
-          <label>Price:&nbsp;&nbsp;{{product.price}}</label>
-        </div>
-      </div>
-      <hr>
-      <a
-        class="btn btn-primary"
-        routerLink="/catalog">OK</a>
+<h2>Product info</h2>
+<hr>
+<div class="row">
+  <div class="col-4">
+    <div class="row">
+      <label>Title:&nbsp;&nbsp;{{product.title}}</label>
+    </div>
+    <div class="row">
+      <label>Price:&nbsp;&nbsp;{{product.price}}</label>
     </div>
   </div>
+  <div class="col-8">
+    <label for="productDescription">Description:</label>
+    <textarea
+      class="form-control"
+      id="productDescription"
+      rows="3"></textarea>
+  </div>
+</div>
+<hr>
+<div class="row justify-content-end">
+  <button
+    class="btn btn-primary col-1"
+    routerLink="/catalog">OK</button>
 </div>

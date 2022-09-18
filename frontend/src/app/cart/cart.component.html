@@ -1,26 +1,37 @@
-<div class="row py-2">
-	<h2>Cart</h2>
-</div>
-
-<div class="row py-2">
-	<div class="col-12">
-		<table class="table table-bordered table-hover my-2">
-			<thead>
-				<tr>
-					<th scope="col">Id</th>
-					<th scope="col">Product</th>
-					<th scope="col">Amount</th>
-					<th scope="col"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let item of content">
-					<th scope="row">{{item.id}}</th>
-					<td>{{item.title}}</td>
-					<td>{{item.price*item.amount}}</td>
-					<td><input type="number" value="{{item.amount}}"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
+<h2>My cart</h2>
+<hr>
+<form>
+  <div
+    class="form-group row"
+    *ngFor="let item of content; index as i">
+    <label class="col-1">{{i+1}}</label>
+    <label class="col-7"> <a routerLink="/info/{{item.product_id}}">{{item.title}}</a></label>
+    <label class="col-1">{{item.price*item.quantity}}&#8381; </label>
+    <div class="col-2">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <button class="btn btn-secondary input-group-prepend rounded-circle btn-sm">-</button>
+        </div>
+        <input
+          type="text"
+          readonly
+          value="{{item.quantity}}"
+          class="form-control">
+        <div class="input-group-append">
+          <button class="btn btn-secondary rounded-circle btn-sm">+</button>
+        </div>
+      </div>
+    </div>
+    <button class="col-1 btn btn-secondary mb-3">Delete</button>
+  </div>
+  <hr>
+  <div class="row justify-content-end">
+    <div
+      class="col-3"
+      role="status"
+      aria-live="polite">Total: {{getTotal()}}</div>
+    <button
+      class="btn btn-primary col-1"
+      type="submit">Submit</button>
+  </div>
+</form>
