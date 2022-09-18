@@ -1,13 +1,14 @@
 package ru.vasiljeva.controller;
 
 import static ru.vasiljeva.utils.AppConstants.BY_ID;
-import static ru.vasiljeva.utils.AppConstants.REST_CONTROLLER_MAPPING;
+import static ru.vasiljeva.utils.AppConstants.REST_PRODUCT_CONTROLLER_MAPPING;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,14 +22,16 @@ import ru.vasiljeva.dto.ProductDto;
 import ru.vasiljeva.service.ProductService;
 
 @RestController
-@RequestMapping(REST_CONTROLLER_MAPPING)
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(REST_PRODUCT_CONTROLLER_MAPPING)
 public class ProductRestController {
 	@Autowired
 	private ProductService service;
 
 	@GetMapping
 	public Page<ProductDto> getAll(@RequestParam(required = false) MultiValueMap<String, String> params) {
-		return this.service.getAll(params);
+		Page<ProductDto> page = this.service.getAll(params);
+		return page;
 	}
 
 	@GetMapping(BY_ID)

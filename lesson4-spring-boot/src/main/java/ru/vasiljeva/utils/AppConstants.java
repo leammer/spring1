@@ -5,7 +5,10 @@ import org.springframework.stereotype.Component;
 @Component
 public final class AppConstants {
 	public static final String MVC_CONTROLLER_MAPPING = "/product";
-	public static final String REST_CONTROLLER_MAPPING = "/app/products";
+	public static final String REST_PRODUCT_CONTROLLER_MAPPING = "/app/products";
+	public static final String REST_CART_CONTROLLER_MAPPING = "/app/cart";
+	public static final String REST_PERSONAL_CONTROLLER_MAPPING = "/app/personal";
+
 	public static final String BY_ID = "/{id}";
 	public static final String NEW = "/new";
 
