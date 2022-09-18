@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -25,8 +24,7 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@OneToOne
-	@JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+	@ManyToOne
 	private Product product;
 
 	@JoinColumn(name = "cart_id")

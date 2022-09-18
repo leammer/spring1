@@ -7,7 +7,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -34,8 +33,7 @@ public class Contact {
 	private String value;
 
 	@ManyToOne
-	@JoinColumn(name = "customer_id")
-	private Customer customer;
+	private User user;
 
 	public Contact(ContactType type, String value) {
 		this.type = type;
