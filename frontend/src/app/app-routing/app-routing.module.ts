@@ -8,6 +8,8 @@ import { CartComponent } from '../cart/cart.component';
 import { ProfileComponent } from '../profile/profile.component';
 import { WelcomePageComponent } from '../welcome-page/welcome-page.component';
 import { ProductInfoComponent } from '../products/product-info/product-info.component';
+import { LoginComponent } from '../login/login.component';
+import { RegisterComponent } from '../register/register.component';
 
 const appRoutes: Routes = [
 	{
@@ -28,6 +30,12 @@ const appRoutes: Routes = [
 	}, {
 		path: "profile",
 		component: ProfileComponent
+	}, {
+		path: "login",
+		component: LoginComponent
+	}, {
+		path: "register",
+		component: RegisterComponent
 	}
 ]
 

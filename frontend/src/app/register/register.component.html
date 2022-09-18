@@ -1,0 +1,44 @@
+<h2>Register</h2>
+<hr>
+<form>
+  <div class="form-group">
+    <label for="usernameInput">Username:&nbsp;&nbsp;</label>
+    <input
+      type="text"
+      class="form-control"
+      id="usernameInput"
+      aria-describedby="usernameHelp">
+    <small
+      id="usernameHelp"
+      class="form-text text-muted">Your username should bu unique</small>
+  </div>
+  <div class="form-group">
+    <label for="passwordInput">Password:&nbsp;&nbsp;</label>
+    <input
+      type="password"
+      class="form-control"
+      id="passwordInput"
+      aria-describedby="passwordHelp">
+    <small
+      id="passwordHelp"
+      class="form-text text-muted">Password should contain UpperCase and LowerCase, Number,
+      SpecialChar and min 8 Chars</small>
+  </div>
+  <div class="form-group">
+    <label for="repeatPasswordInput">Repeat password:&nbsp;&nbsp;</label>
+    <input
+      type="password"
+      class="form-control"
+      id="repeatPasswordInput"
+      aria-describedby="repeatPasswordHelp">
+    <small
+      id="repeatPasswordHelp"
+      class="form-text text-muted">This password must exactly match the previous one</small>
+  </div>
+  <hr>
+  <div class="row justify-content-end">
+    <button
+      class="btn btn-primary col-1"
+      type="submit">Register</button>
+  </div>
+</form>
