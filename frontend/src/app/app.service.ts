@@ -4,19 +4,19 @@ import { PersonalInfo } from './profile/personal-info'
 
 @Injectable()
 export class AppService {
-  currentUserId = 1;
+	currentUserId = 1;
 
-  constructor(private http: HttpClient) { }
-  
-  getCurrentUserId(id: number) {
-    return this.currentUserId;
-  }
+	constructor(private http: HttpClient) { }
 
-  setCurrentUserId(id: number) {
-    this.currentUserId = id;
-  }
-  
-  getPersonalInfo(id: number) {
-    return this.http.get<PersonalInfo>(`http://localhost:8090//app/personal/${id}`);
-  }
+	getCurrentUserId(id: number) {
+		return this.currentUserId;
+	}
+
+	setCurrentUserId(id: number) {
+		this.currentUserId = id;
+	}
+
+	getPersonalInfo(id: number) {
+		return this.http.get<PersonalInfo>(`http://localhost:8090//app/personal/${id}`);
+	}
 }

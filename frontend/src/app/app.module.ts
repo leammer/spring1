@@ -16,22 +16,22 @@ import { AppService } from './app.service';
 import { CartService } from './cart/cart.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ProductsComponent,
-    ProductComponent,
-    FiltersComponent,
-    ProfileComponent,
-    WelcomePageComponent,
-    ProductInfoComponent,
-    CartComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule
-  ],
-  providers: [ProductService, AppService, CartService],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		ProductsComponent,
+		ProductComponent,
+		FiltersComponent,
+		ProfileComponent,
+		WelcomePageComponent,
+		ProductInfoComponent,
+		CartComponent
+	],
+	imports: [
+		BrowserModule,
+		HttpClientModule,
+		AppRoutingModule
+	],
+	providers: [ProductService, AppService, CartService],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

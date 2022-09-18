@@ -10,33 +10,33 @@ import { WelcomePageComponent } from '../welcome-page/welcome-page.component';
 import { ProductInfoComponent } from '../products/product-info/product-info.component';
 
 const appRoutes: Routes = [
-  {
-    path: "",
-    component: WelcomePageComponent
-  }, {
-    path: "catalog",
-    component: ProductsComponent
-  }, {
-    path: "info/:id",
-    component: ProductInfoComponent
-  }, {
-    path: "edit/:id",
-    component: ProductComponent
-  }, {
-    path: "cart",
-    component: CartComponent
-  }, {
-    path: "profile",
-    component: ProfileComponent
-  }
+	{
+		path: "",
+		component: WelcomePageComponent
+	}, {
+		path: "catalog",
+		component: ProductsComponent
+	}, {
+		path: "info/:id",
+		component: ProductInfoComponent
+	}, {
+		path: "edit/:id",
+		component: ProductComponent
+	}, {
+		path: "cart",
+		component: CartComponent
+	}, {
+		path: "profile",
+		component: ProfileComponent
+	}
 ]
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(appRoutes)
-  ],
-  exports: [ RouterModule ]
+	declarations: [],
+	imports: [
+		CommonModule,
+		RouterModule.forRoot(appRoutes)
+	],
+	exports: [RouterModule]
 })
 export class AppRoutingModule { }

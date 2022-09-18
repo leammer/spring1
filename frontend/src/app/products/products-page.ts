@@ -7,8 +7,8 @@ export interface ProductsPage {
 	number: number,
 	numberOfElements: number,
 	pageable: {
-	  offset:number,
-	  pageNumber: number,
-	  pageSize: number
+		offset: number,
+		pageNumber: number,
+		pageSize: number
 	}
 }

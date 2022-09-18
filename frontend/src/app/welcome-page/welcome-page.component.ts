@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-welcome-page',
-  templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.css']
+	selector: 'app-welcome-page',
+	templateUrl: './welcome-page.component.html',
+	styleUrls: ['./welcome-page.component.css']
 })
 export class WelcomePageComponent implements OnInit {
 
-  constructor() { }
+	constructor() { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+	}
 
 }
