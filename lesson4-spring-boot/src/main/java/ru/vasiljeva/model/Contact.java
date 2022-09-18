@@ -4,9 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -33,7 +35,8 @@ public class Contact {
 	private String value;
 
 	@ManyToOne
-	private User user;
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_contact_customer"))
+	private Customer customer;
 
 	public Contact(ContactType type, String value) {
 		this.type = type;

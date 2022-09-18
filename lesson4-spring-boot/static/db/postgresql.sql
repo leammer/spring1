@@ -37,13 +37,9 @@ CREATE TABLE IF NOT EXISTS product (
 
 CREATE TABLE IF NOT EXISTS users (
 	id bigserial NOT NULL,
-	issued_by varchar(255) NULL,
-	issued_date timestamp NULL,
-	"number" varchar(255) NULL,
-	serial varchar(255) NULL,
 	"password" varchar(1024) NOT NULL,
 	username varchar(255) NOT NULL,
-	CONSTRAINT uk_username UNIQUE (username),
+	CONSTRAINT fk_username UNIQUE (username),
 	CONSTRAINT users_pkey PRIMARY KEY (id)
 );
 
@@ -60,11 +56,11 @@ CREATE TABLE IF NOT EXISTS roles (
 --
 -- Name: roles_user; Type: TABLE; Schema: test;
 --
-CREATE TABLE roles_users (
+CREATE TABLE IF NOT EXISTS roles_users (
 	roles_id int8 NOT NULL,
 	users_id int8 NOT NULL,
-	CONSTRAINT roles_fk FOREIGN KEY (roles_id) REFERENCES roles(id),
-	CONSTRAINT users_fk FOREIGN KEY (users_id) REFERENCES users(id)
+	CONSTRAINT fk_roles_users FOREIGN KEY (users_id) REFERENCES users(id),
+	CONSTRAINT fk_users_roles FOREIGN KEY (roles_id) REFERENCES roles(id)
 );
 
 --
@@ -75,9 +71,13 @@ CREATE TABLE IF NOT EXISTS customer (
 	id bigserial NOT NULL,
 	first_name varchar(255) NULL,
 	last_name varchar(255) NULL,
+	issued_by varchar(255) NULL,
+	issued_date timestamp NULL,
+	"number" varchar(255) NULL,
+	serial varchar(255) NULL,
 	user_id int8 NULL,
 	CONSTRAINT customer_pkey PRIMARY KEY (id),
-	CONSTRAINT customer_user_fk FOREIGN KEY (user_id) REFERENCES users(id)
+	CONSTRAINT fk_customer_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 --
@@ -88,10 +88,9 @@ CREATE TABLE IF NOT EXISTS contact (
 	id bigserial NOT NULL,
 	"type" varchar(255) NOT NULL,
 	value varchar(255) NOT NULL,
-	user_id int8 NULL,
+	customer_id int8 NULL,
 	CONSTRAINT contact_pkey PRIMARY KEY (id),
-	CONSTRAINT contact_user_fk FOREIGN KEY (user_id) REFERENCES users(id)
-
+	CONSTRAINT fk_contact_customer FOREIGN KEY (customer_id) REFERENCES public.customer(id)
 );
 
 --
@@ -102,7 +101,7 @@ CREATE TABLE IF NOT EXISTS cart (
 	id bigserial NOT NULL,
 	customer_id int8 NULL,
 	CONSTRAINT cart_pkey PRIMARY KEY (id),
-	CONSTRAINT cart_customer_fk FOREIGN KEY (customer_id) REFERENCES customer(id)
+	CONSTRAINT fk_cart_customer FOREIGN KEY (customer_id) REFERENCES customer(id)
 );
 
 --
@@ -147,10 +146,10 @@ INSERT INTO product VALUES (DEFAULT, 250.65, false, '','Cheese');
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: test;
 --
-INSERT INTO users VALUES (DEFAULT,  NULL, NULL, NULL, NULL, 'user1USER!', 'user1');
-INSERT INTO users VALUES (DEFAULT,  NULL, NULL, NULL, NULL, 'user2USER!', 'user2');
-INSERT INTO users VALUES (DEFAULT,  NULL, NULL, NULL, NULL, 'user3USER!', 'user3');
-INSERT INTO users VALUES (DEFAULT,  NULL, NULL, NULL, NULL, 'user4USER!', 'user4');
+INSERT INTO users VALUES (DEFAULT,  'user1USER!', 'user1');
+INSERT INTO users VALUES (DEFAULT,  'user2USER!', 'user2');
+INSERT INTO users VALUES (DEFAULT,  'user3USER!', 'user3');
+INSERT INTO users VALUES (DEFAULT,  'user4USER!', 'user4');
 
 --
 -- Data for Name: roles; Type: TABLE DATA; Schema: test;
@@ -183,10 +182,10 @@ INSERT INTO roles_users VALUES (4,  4);
 --
 -- Data for Name: customer; Type: TABLE DATA; Schema: test;
 --
-INSERT INTO customer VALUES (DEFAULT, 'Ivan', 'Ivanov', 1);
-INSERT INTO customer VALUES (DEFAULT, 'Peter', 'Petrov', 2);
-INSERT INTO customer VALUES (DEFAULT, 'Semyon', 'Semenov', 3);
-INSERT INTO customer VALUES (DEFAULT, 'Danil', 'Danilov', 4);
+INSERT INTO customer VALUES (DEFAULT, 'Ivan', 'Ivanov', NULL, NULL, NULL, NULL, 1);
+INSERT INTO customer VALUES (DEFAULT, 'Peter', 'Petrov', NULL, NULL, NULL, NULL, 2);
+INSERT INTO customer VALUES (DEFAULT, 'Semyon', 'Semenov', NULL, NULL, NULL, NULL, 3);
+INSERT INTO customer VALUES (DEFAULT, 'Danil', 'Danilov', NULL, NULL, NULL, NULL, 4);
 
 --
 -- Data for Name: contact; Type: TABLE DATA; Schema: test;

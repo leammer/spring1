@@ -7,9 +7,12 @@ import lombok.Setter;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -27,5 +30,7 @@ public class Role {
 	private String name;
 
 	@ManyToMany
+	@JoinTable(name = "roles_users", joinColumns = { @JoinColumn(name = "roles_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "users_id") }, foreignKey = @ForeignKey(name = "FK_users_roles"), inverseForeignKey = @ForeignKey(name = "FK_roles_users"))
 	private List<User> users;
 }

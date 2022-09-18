@@ -3,6 +3,7 @@ package ru.vasiljeva.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,9 +26,10 @@ public class Item {
 	private Long id;
 
 	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_item_product"))
 	private Product product;
 
-	@JoinColumn(name = "cart_id")
+	@JoinColumn(name = "cart_id", foreignKey = @ForeignKey(name = "FK_item_cart"))
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	private Cart cart;
 
