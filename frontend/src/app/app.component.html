@@ -1,19 +1,35 @@
 <!-- Toolbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/">EShop</a>
-
-	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/catalog">Catalog</a></li>
-			<li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/cart">Cart</a></li>
-			<li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/profile">Profile</a></li>
-		</ul>
-	</div>
-
-	<div><button class="btn btn-primary">Log in</button>
-	</div>
+  <a
+    class="navbar-brand"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{exact: true}"
+    routerLink="/">EShop</a>
+  <div
+    class="collapse navbar-collapse"
+    id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li
+        class="nav-item"
+        routerLinkActive="active"><a
+        class="nav-link"
+        routerLink="/catalog">Catalog</a></li>
+      <li
+        class="nav-item"
+        routerLinkActive="active"><a
+        class="nav-link"
+        routerLink="/cart">Cart</a></li>
+      <li
+        class="nav-item"
+        routerLinkActive="active"><a
+        class="nav-link"
+        routerLink="/profile">Profile</a></li>
+    </ul>
+  </div>
+  <div>
+    <button class="btn btn-primary">Log in</button>
+  </div>
 </nav>
-
 <div class="container">
-	<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>

@@ -1,26 +1,24 @@
 <div class="container">
-	<h2>Personal information</h2>
-	<div class="row py-2">
-		<div class="col-12">
-			<hr>
-			<div class="form-group">
-				<div>
-					<label>First name:&nbsp;&nbsp;{{info.first_name}}</label>
-				</div>
-				<div>
-					<label>Last name:&nbsp;&nbsp;{{info.last_name}}</label>
-				</div>
-
-				<div>
-					<label>Contacts:</label>
-					<ul *ngFor="let contact of info.contacts">
-						<li>{{contact.type}}:&nbsp;{{contact.value}}</li>
-					</ul>
-
-				</div>
-				<hr>
-				<a class="btn btn-primary">OK</a>
-			</div>
-		</div>
-	</div>
+  <h2>Personal information</h2>
+  <div class="row py-2">
+    <div class="col-12">
+      <hr>
+      <div class="form-group">
+        <div>
+          <label>First name:&nbsp;&nbsp;{{info.first_name}}</label>
+        </div>
+        <div>
+          <label>Last name:&nbsp;&nbsp;{{info.last_name}}</label>
+        </div>
+        <div>
+          <label>Contacts:</label>
+          <ul *ngFor="let contact of info.contacts">
+            <li>{{contact.type}}:&nbsp;{{contact.value}}</li>
+          </ul>
+        </div>
+        <hr>
+        <a class="btn btn-primary">OK</a>
+      </div>
+    </div>
+  </div>
 </div>
