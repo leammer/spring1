@@ -3,5 +3,5 @@ export interface Item {
 	product_id: number;
 	title: string;
 	price: number;
-	amount: number;
+	quantity: number;
 }

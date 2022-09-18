@@ -24,7 +24,6 @@ public class ItemDto {
 	@JsonProperty("price")
 	private Double productPrice;
 
-	@JsonProperty("amount")
 	@NotNull
 	@Min(0)
 	private Long quantity;

@@ -24,8 +24,9 @@ SET default_with_oids = false;
 
 CREATE TABLE IF NOT EXISTS product (
 	id bigserial NOT NULL,
-	price numeric(10, 2) NOT NULL,
+	price numeric(10, 2) NULL,
 	deleted bool NOT NULL,
+	description varchar(255) NULL,
 	title varchar(30) NOT NULL,
 	CONSTRAINT product_pkey PRIMARY KEY (id)
 );
@@ -83,26 +84,26 @@ CREATE TABLE IF NOT EXISTS item (
 -- Data for Name: product; Type: TABLE DATA; Schema: test;
 --
 
-INSERT INTO product VALUES (DEFAULT, 10.15, false, 'Milk');
-INSERT INTO product VALUES (DEFAULT, 22.00, false, 'Bread');
-INSERT INTO product VALUES (DEFAULT, 32.50, false, 'Carrot');
-INSERT INTO product VALUES (DEFAULT, 400, false, 'Onion');
-INSERT INTO product VALUES (DEFAULT, 429.53, false, 'Chicken');
-INSERT INTO product VALUES (DEFAULT, 326.55, false, 'Beef');
-INSERT INTO product VALUES (DEFAULT, 435.33, false, 'Pork');
-INSERT INTO product VALUES (DEFAULT, 543.25, false, 'Cod');
-INSERT INTO product VALUES (DEFAULT, 453.57, false, 'Salmon');
-INSERT INTO product VALUES (DEFAULT, 14.31, false, 'Cabbage');
-INSERT INTO product VALUES (DEFAULT, 8.90, false, 'Cucumber');
-INSERT INTO product VALUES (DEFAULT, 40.53, false, 'Garlic');
-INSERT INTO product VALUES (DEFAULT, 10.75, false, 'Potato');
-INSERT INTO product VALUES (DEFAULT, 83.00, false, 'Apple');
-INSERT INTO product VALUES (DEFAULT, 145.35, false, 'Banana');
-INSERT INTO product VALUES (DEFAULT, 2390.55, false, 'Cherry');
-INSERT INTO product VALUES (DEFAULT, 121.37, false, 'Lemon');
-INSERT INTO product VALUES (DEFAULT, 45.42, false, 'Rice');
-INSERT INTO product VALUES (DEFAULT, 180.54, false, 'Butter');
-INSERT INTO product VALUES (DEFAULT, 250.65, false, 'Cheese');
+INSERT INTO product VALUES (DEFAULT,  10.15, false, '', 'Milk');
+INSERT INTO product VALUES (DEFAULT,  22.00, false, '','Bread');
+INSERT INTO product VALUES (DEFAULT,  32.50, false, '','Carrot');
+INSERT INTO product VALUES (DEFAULT, 400.00, false, '','Onion');
+INSERT INTO product VALUES (DEFAULT, 429.53, false, '','Chicken');
+INSERT INTO product VALUES (DEFAULT, 326.55, false, '','Beef');
+INSERT INTO product VALUES (DEFAULT, 435.33, false, '','Pork');
+INSERT INTO product VALUES (DEFAULT, 543.25, false, '','Cod');
+INSERT INTO product VALUES (DEFAULT, 453.57, false, '','Salmon');
+INSERT INTO product VALUES (DEFAULT,  14.31, false, '','Cabbage');
+INSERT INTO product VALUES (DEFAULT,   8.90, false, '','Cucumber');
+INSERT INTO product VALUES (DEFAULT,  40.53, false, '','Garlic');
+INSERT INTO product VALUES (DEFAULT,  10.75, false, '','Potato');
+INSERT INTO product VALUES (DEFAULT,  83.00, false, '','Apple');
+INSERT INTO product VALUES (DEFAULT, 145.35, false, '','Banana');
+INSERT INTO product VALUES (DEFAULT,2390.55, false, '','Cherry');
+INSERT INTO product VALUES (DEFAULT, 121.37, false, '','Lemon');
+INSERT INTO product VALUES (DEFAULT,  45.42, false, '','Rice');
+INSERT INTO product VALUES (DEFAULT, 180.54, false, '','Butter');
+INSERT INTO product VALUES (DEFAULT, 250.65, false, '','Cheese');
 
 --
 -- Data for Name: customer; Type: TABLE DATA; Schema: test;

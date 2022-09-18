@@ -24,4 +24,5 @@ public class ProductDto {
 	@Min(0)
 	@NumberFormat(style = Style.CURRENCY)
 	private Double price;
+	private String description;
 }

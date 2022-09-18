@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,4 +36,6 @@ public class Product {
 
 	@Column(name = "deleted", nullable = false)
 	private Boolean deleted = false;
+	
+	private String description;
 }
