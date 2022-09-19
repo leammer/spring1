@@ -1,15 +1,17 @@
 package ru.vasiljeva.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -27,14 +29,18 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length = 30, nullable = false)
 	private String firstName;
 
-	@Column(length = 30, nullable = false)
 	private String lastName;
 
-	@OneToMany(mappedBy = "customer", cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE }, orphanRemoval = true, fetch = FetchType.LAZY)
-	private Set<Contact> contacts;
+	@Embedded
+	private Passport passport;
 
+	@OneToMany(mappedBy = "customer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE }, orphanRemoval = true)
+	private List<Contact> contacts;
+
+	@OneToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_customer_user"))
+	private User user;
 }

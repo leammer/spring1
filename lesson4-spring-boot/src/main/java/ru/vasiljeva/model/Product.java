@@ -1,12 +1,14 @@
 package ru.vasiljeva.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.SQLDelete;
@@ -36,6 +38,9 @@ public class Product {
 
 	@Column(name = "deleted", nullable = false)
 	private Boolean deleted = false;
-	
+
+	@OneToMany(mappedBy = "product")
+	private List<Item> items;
+
 	private String description;
 }

@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductDto addProduct(ProductDto dto) {
-		return mappingUtils.mapToProductDto(this.productRepository.saveAndFlush(mappingUtils.mapToProductEntity(dto)));
+		return mappingUtils.mapToDto(this.productRepository.saveAndFlush(mappingUtils.mapToEntity(dto)));
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
 		//@formatter:off
 		return this.productRepository
 				.findById(id)
-				.map(mappingUtils::mapToProductDto)
+				.map(mappingUtils::mapToDto)
 				.orElseThrow(() -> new ServiceException(ExceptionType.NOT_FOUND, "product", "id=" + id, ""));
 		//@formatter:on
 	}
@@ -87,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
 		//@formatter:off
 		return this.productRepository
 				.findAll(predicate, PageRequest.of(page, pageSize, sort))
-				.map(mappingUtils::mapToProductDto);
+				.map(mappingUtils::mapToDto);
 		//@formatter:on
 	}
 }

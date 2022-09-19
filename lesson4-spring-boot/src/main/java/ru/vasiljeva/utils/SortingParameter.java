@@ -12,6 +12,8 @@ public enum SortingParameter {
 	PRICE_DOWN("priceDown", "cost", Sort.Direction.DESC),
 	TITLE_UP("titleUp", "name", Sort.Direction.ASC), 
 	TITLE_DOWN("titleDown", "name", Sort.Direction.DESC),
+	USERNAME_UP("usernameUp", "username", Sort.Direction.ASC), 
+	USERNAME_DOWN("usernameDown", "username", Sort.Direction.DESC),
 	UNSORTED("", Sort.unsorted());
 	//@formatter:on
 

@@ -32,14 +32,52 @@ CREATE TABLE IF NOT EXISTS product (
 );
 
 --
+-- Name: users; Type: TABLE; Schema: test;
+--
+
+CREATE TABLE IF NOT EXISTS users (
+	id bigserial NOT NULL,
+	"password" varchar(1024) NOT NULL,
+	username varchar(255) NOT NULL,
+	CONSTRAINT fk_username UNIQUE (username),
+	CONSTRAINT users_pkey PRIMARY KEY (id)
+);
+
+--
+-- Name: roles; Type: TABLE; Schema: test;
+--
+
+CREATE TABLE IF NOT EXISTS roles (
+	id bigserial NOT NULL,
+	"name" varchar(255) NULL,
+	CONSTRAINT roles_pkey PRIMARY KEY (id)
+);
+
+--
+-- Name: roles_user; Type: TABLE; Schema: test;
+--
+CREATE TABLE IF NOT EXISTS roles_users (
+	roles_id int8 NOT NULL,
+	users_id int8 NOT NULL,
+	CONSTRAINT fk_roles_users FOREIGN KEY (users_id) REFERENCES users(id),
+	CONSTRAINT fk_users_roles FOREIGN KEY (roles_id) REFERENCES roles(id)
+);
+
+--
 -- Name: customer; Type: TABLE; Schema: test;
 --
 
 CREATE TABLE IF NOT EXISTS customer (
 	id bigserial NOT NULL,
-	first_name varchar(30) NOT NULL,
-	last_name varchar(30) NOT NULL,
-	CONSTRAINT customer_pkey PRIMARY KEY (id)
+	first_name varchar(255) NULL,
+	last_name varchar(255) NULL,
+	issued_by varchar(255) NULL,
+	issued_date timestamp NULL,
+	"number" varchar(255) NULL,
+	serial varchar(255) NULL,
+	user_id int8 NULL,
+	CONSTRAINT customer_pkey PRIMARY KEY (id),
+	CONSTRAINT fk_customer_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 --
@@ -52,7 +90,7 @@ CREATE TABLE IF NOT EXISTS contact (
 	value varchar(255) NOT NULL,
 	customer_id int8 NULL,
 	CONSTRAINT contact_pkey PRIMARY KEY (id),
-	CONSTRAINT contact_customer_fkey FOREIGN KEY (customer_id) REFERENCES customer(id)
+	CONSTRAINT fk_contact_customer FOREIGN KEY (customer_id) REFERENCES public.customer(id)
 );
 
 --
@@ -63,7 +101,7 @@ CREATE TABLE IF NOT EXISTS cart (
 	id bigserial NOT NULL,
 	customer_id int8 NULL,
 	CONSTRAINT cart_pkey PRIMARY KEY (id),
-	CONSTRAINT cart_customer_fkey FOREIGN KEY (customer_id) REFERENCES customer(id)
+	CONSTRAINT fk_cart_customer FOREIGN KEY (customer_id) REFERENCES customer(id)
 );
 
 --
@@ -106,21 +144,55 @@ INSERT INTO product VALUES (DEFAULT, 180.54, false, '','Butter');
 INSERT INTO product VALUES (DEFAULT, 250.65, false, '','Cheese');
 
 --
--- Data for Name: customer; Type: TABLE DATA; Schema: test;
+-- Data for Name: users; Type: TABLE DATA; Schema: test;
+--
+INSERT INTO users VALUES (DEFAULT,  'user1USER!', 'user1');
+INSERT INTO users VALUES (DEFAULT,  'user2USER!', 'user2');
+INSERT INTO users VALUES (DEFAULT,  'user3USER!', 'user3');
+INSERT INTO users VALUES (DEFAULT,  'user4USER!', 'user4');
+
+--
+-- Data for Name: roles; Type: TABLE DATA; Schema: test;
 --
 
-INSERT INTO customer VALUES (DEFAULT, 'Ivan', 'Ivanov');
-INSERT INTO customer VALUES (DEFAULT, 'Peter', 'Petrov');
-INSERT INTO customer VALUES (DEFAULT, 'Semyon', 'Semenov');
+INSERT INTO roles VALUES (DEFAULT,  'user');
+INSERT INTO roles VALUES (DEFAULT,  'manager');
+INSERT INTO roles VALUES (DEFAULT,  'admin');
+INSERT INTO roles VALUES (DEFAULT,  'superuser');
+
+--
+-- Data for Name: roles_user; Type: TABLE DATA; Schema: test;
+--
+-- user1 has role user --
+INSERT INTO roles_users VALUES (1,  1);
+-- user2 has roles user, manager --
+INSERT INTO roles_users VALUES (1,  2);
+INSERT INTO roles_users VALUES (2,  2);
+-- user3 has roles user, manager, admin --
+INSERT INTO roles_users VALUES (1,  3);
+INSERT INTO roles_users VALUES (2,  3);
+INSERT INTO roles_users VALUES (3,  3);
+-- user4 has roles user, manager, admin, superadmin --
+INSERT INTO roles_users VALUES (1,  4);
+INSERT INTO roles_users VALUES (2,  4);
+INSERT INTO roles_users VALUES (3,  4);
+INSERT INTO roles_users VALUES (4,  4);
+
+
+--
+-- Data for Name: customer; Type: TABLE DATA; Schema: test;
+--
+INSERT INTO customer VALUES (DEFAULT, 'Ivan', 'Ivanov', NULL, NULL, NULL, NULL, 1);
+INSERT INTO customer VALUES (DEFAULT, 'Peter', 'Petrov', NULL, NULL, NULL, NULL, 2);
+INSERT INTO customer VALUES (DEFAULT, 'Semyon', 'Semenov', NULL, NULL, NULL, NULL, 3);
+INSERT INTO customer VALUES (DEFAULT, 'Danil', 'Danilov', NULL, NULL, NULL, NULL, 4);
 
 --
 -- Data for Name: contact; Type: TABLE DATA; Schema: test;
 --
-
 -- Ivan Ivanov's contacts
 INSERT INTO contact VALUES (DEFAULT, 'MOBILE_PHONE', '+71234567890', 1);
 INSERT INTO contact VALUES (DEFAULT, 'ADDRESS', 'Some address', 1);
-
 -- Semyon Semenov's contacts
 INSERT INTO contact VALUES (DEFAULT, 'EMAIL', 'semenov@mail.ru', 3);
 
@@ -130,6 +202,7 @@ INSERT INTO contact VALUES (DEFAULT, 'EMAIL', 'semenov@mail.ru', 3);
 INSERT INTO cart VALUES (DEFAULT, 1);
 INSERT INTO cart VALUES (DEFAULT, 2);
 INSERT INTO cart VALUES (DEFAULT, 3);
+INSERT INTO cart VALUES (DEFAULT, 4);
 
 --
 -- Data for Name: item; Type: TABLE DATA; Schema: test;

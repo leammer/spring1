@@ -56,21 +56,21 @@ public class CustomerServiceImpl implements CustomerService {
 		//@formatter:off
 		return this.customerRepository
 				.findById(customerId)
-				.map(mappingUtils::mapToPersonalInfoDto)
+				.map(mappingUtils::mapToDto)
 				.orElseThrow(() -> new ServiceException(ExceptionType.NOT_FOUND, "customer", "id=" + customerId, ""));
 		//@formatter:on
 	}
 
 	@Override
 	public void updatePersonalInfoId(Long customerId, PersonalInfoDto dto) {
-		this.customerRepository.saveAndFlush(mappingUtils.mapToCustomerEntity(dto));
+		this.customerRepository.saveAndFlush(mappingUtils.mapToEntity(dto));
 	}
 
 	@Override
 	public PersonalInfoDto addContact(Long customerId, ContactType type, String value) {
 		Customer customer = this.customerRepository.findById(customerId)
 				.orElseThrow(() -> new ServiceException(ExceptionType.NOT_FOUND, "customer", "id=" + customerId, ""));
-		Set<Contact> contacts = customer.getContacts();
+		/*Set<Contact> contacts = customer.getContacts();
 		Optional<Contact> contact = contacts.stream().filter(c -> c.getType() == type).findAny();
 		if (contact.isPresent()) {
 			contact.get().setValue(value);
@@ -78,9 +78,9 @@ public class CustomerServiceImpl implements CustomerService {
 			Contact newContact = new Contact(type, value);
 			newContact.setCustomer(customer);
 			contacts.add(newContact);
-		}
+		}*/
 		Customer newCustomer = this.customerRepository.save(customer);
-		return mappingUtils.mapToPersonalInfoDto(newCustomer);
+		return mappingUtils.mapToDto(newCustomer);
 	}
 
 	@Override

@@ -5,6 +5,7 @@ public enum ExceptionType {
 	BAD_REQUEST("ERROR-400"),
 	NOT_FOUND("ERROR-404"),
 	METHOD_NOT_ALLOWED("ERRPR-405"),
+	ALREADY_EXISTS("ERROR_409"),
 	DEFAULT("ERROR-500");
 	//@formatter:on
 

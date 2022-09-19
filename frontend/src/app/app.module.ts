@@ -14,6 +14,8 @@ import { ProductInfoComponent } from './products/product-info/product-info.compo
 import { CartComponent } from './cart/cart.component';
 import { AppService } from './app.service';
 import { CartService } from './cart/cart.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
 	declarations: [
@@ -24,7 +26,9 @@ import { CartService } from './cart/cart.service';
 		ProfileComponent,
 		WelcomePageComponent,
 		ProductInfoComponent,
-		CartComponent
+		CartComponent,
+  LoginComponent,
+  RegisterComponent
 	],
 	imports: [
 		BrowserModule,

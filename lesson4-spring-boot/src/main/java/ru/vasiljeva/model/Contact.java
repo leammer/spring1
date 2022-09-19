@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class Contact {
 	private String value;
 
 	@ManyToOne
-	@JoinColumn(name = "customer_id")
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_contact_customer"))
 	private Customer customer;
 
 	public Contact(ContactType type, String value) {
