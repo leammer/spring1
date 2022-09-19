@@ -49,7 +49,7 @@ public class CartServiceImpl implements CartService {
 		//@formatter:off
 		return this.cartRepository
 				.findOne(QCart.cart.customer.id.eq(customerId))
-				.map(mappingUtils::mapToCartDto)
+				.map(mappingUtils::mapToDto)
 				.orElse(new CartDto(customerId));
 		//@formatter:on
 	}
@@ -73,7 +73,7 @@ public class CartServiceImpl implements CartService {
 			newItem.setQuantity(quantity);
 			items.add(newItem);
 		}
-		return mappingUtils.mapToCartDto(this.cartRepository.saveAndFlush(cart));
+		return mappingUtils.mapToDto(this.cartRepository.saveAndFlush(cart));
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public void updateItemFromCart(Long customerId, ItemDto item) {
-		this.itemRepository.saveAndFlush(mappingUtils.mapToItemEntity(item));
+		this.itemRepository.saveAndFlush(mappingUtils.mapToEntity(item));
 	}
 
 }
