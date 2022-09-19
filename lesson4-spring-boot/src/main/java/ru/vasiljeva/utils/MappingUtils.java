@@ -2,6 +2,8 @@ package ru.vasiljeva.utils;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+
 import ru.vasiljeva.dto.PersonalInfoDto;
 import ru.vasiljeva.dto.CartDto;
 import ru.vasiljeva.dto.ItemDto;
@@ -11,6 +13,7 @@ import ru.vasiljeva.model.Cart;
 import ru.vasiljeva.model.Customer;
 import ru.vasiljeva.model.Item;
 import ru.vasiljeva.model.Product;
+import ru.vasiljeva.model.Role;
 import ru.vasiljeva.model.User;
 
 @Mapper(componentModel = "spring")
@@ -41,8 +44,11 @@ public interface MappingUtils {
 	@Mapping(target = "items", source = "dto.cart")
 	Cart mapToEntity(CartDto dto);
 
-	@Mapping(target = "password", ignore = true)
+	@Mapping(target = "roles", qualifiedByName = "RoleToString")
 	UserDto mapToDto(User entity);
 
-	User mapToEntity(UserDto dto);
+	@Named("RoleToString")
+	default String roleToString(Role role) {
+		return role.getName();
+	}
 }

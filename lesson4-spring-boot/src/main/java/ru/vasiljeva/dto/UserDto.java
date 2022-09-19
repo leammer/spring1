@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.List;
-
 import javax.validation.constraints.NotBlank;
 
 @Getter
@@ -18,5 +16,5 @@ public class UserDto {
 	@NotBlank
 	private String username;
 	private String password;
-	private List<RoleDto> roles;
+	private String[] roles;
 }
