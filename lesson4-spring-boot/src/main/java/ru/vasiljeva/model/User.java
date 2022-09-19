@@ -6,15 +6,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -38,11 +41,13 @@ public class User {
 	@Column(nullable = false, length = 1024)
 	private String password;
 
-	@OneToOne(mappedBy = "user", cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
 	private Customer customer;
 
-	@ManyToMany(mappedBy = "users", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-	private List<Role> roles = Collections.<Role>emptyList();
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinTable(name = "users_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") }, foreignKey = @ForeignKey(name = "FK_roles_users"), inverseForeignKey = @ForeignKey(name = "FK_users_roles"))
+	private Set<Role> roles = Collections.<Role>emptySet();
 
 	public User(String username, String password) {
 		this.username = username;

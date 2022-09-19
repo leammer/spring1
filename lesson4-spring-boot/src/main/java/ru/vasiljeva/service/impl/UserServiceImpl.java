@@ -3,6 +3,7 @@ package ru.vasiljeva.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -46,26 +47,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto addUser(UserDto dto) {
-		QUser user = QUser.user;
-		QRole role = QRole.role;
-
 		if (this.userRepository.findByUsername(dto.getUsername()) != null) {
 			throw new ServiceException(ExceptionType.ALREADY_EXISTS, "user");
 		}
-
-		User entity = mappingUtils.mapToEntity(dto);
-
-		if (dto.getRoles() != null) {
-			BooleanBuilder predicateRole = new BooleanBuilder();
-			for (String roleValue : dto.getRoles()) {
-				predicateRole.or(role.name.equalsIgnoreCase(roleValue));
-			}
-			Iterable<Role> iterator = this.roleRepository.findAll(predicateRole);
-			List<Role> roles = StreamSupport.stream(iterator.spliterator(), false).collect(Collectors.toList());
-			entity.setRoles(roles);
-		}
-
-		return mappingUtils.mapToDto(this.userRepository.saveAndFlush(entity));
+		return saveOrUpdate(dto);
 	}
 
 	@Override
@@ -77,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto updateUser(UserDto dto) {
-		return null;// mappingUtils.mapToDto(this.userRepository.saveAndFlush(mappingUtils.mapToEntity(dto)));
+		return saveOrUpdate(dto);
 	}
 
 	@Override
@@ -101,5 +86,24 @@ public class UserServiceImpl implements UserService {
 				.findAll(predicate, PageRequest.of(number, size, sort.getSort()))
 				.map(mappingUtils::mapToDto);
 		//@formatter:on
+	}
+
+	private UserDto saveOrUpdate(UserDto dto) {
+		QUser user = QUser.user;
+		QRole role = QRole.role;
+
+		User entity = mappingUtils.mapToEntity(dto);
+
+		if (dto.getRoles() != null) {
+			BooleanBuilder predicateRole = new BooleanBuilder();
+			for (String roleValue : dto.getRoles()) {
+				predicateRole.or(role.name.equalsIgnoreCase(roleValue));
+			}
+			Iterable<Role> iterator = this.roleRepository.findAll(predicateRole);
+			Set<Role> roles = StreamSupport.stream(iterator.spliterator(), false).collect(Collectors.toSet());
+			entity.setRoles(roles);
+		}
+
+		return mappingUtils.mapToDto(this.userRepository.saveAndFlush(entity));
 	}
 }
