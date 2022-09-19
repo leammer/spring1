@@ -54,7 +54,18 @@ CREATE TABLE IF NOT EXISTS roles (
 );
 
 --
--- Name: roles_user; Type: TABLE; Schema: test;
+-- Name: users_roles; Type: TABLE; Schema: test;
+--
+CREATE TABLE IF NOT EXISTS users_roles (
+	user_id int8 NOT NULL,
+	role_id int8 NOT NULL,
+	CONSTRAINT users_roles_pkey PRIMARY KEY (user_id, role_id),
+	CONSTRAINT fk_roles_users FOREIGN KEY (user_id) REFERENCES users(id),
+	CONSTRAINT fk_users_roles FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+--
+-- Name: roles_users; Type: TABLE; Schema: test;
 --
 CREATE TABLE IF NOT EXISTS roles_users (
 	roles_id int8 NOT NULL,
@@ -161,22 +172,22 @@ INSERT INTO roles VALUES (DEFAULT,  'admin');
 INSERT INTO roles VALUES (DEFAULT,  'superuser');
 
 --
--- Data for Name: roles_user; Type: TABLE DATA; Schema: test;
+-- Data for Name: users_roles; Type: TABLE DATA; Schema: test;
 --
 -- user1 has role user --
-INSERT INTO roles_users VALUES (1,  1);
+INSERT INTO users_roles VALUES (1,  1);
 -- user2 has roles user, manager --
-INSERT INTO roles_users VALUES (1,  2);
-INSERT INTO roles_users VALUES (2,  2);
+INSERT INTO users_roles VALUES (1,  2);
+INSERT INTO users_roles VALUES (2,  2);
 -- user3 has roles user, manager, admin --
-INSERT INTO roles_users VALUES (1,  3);
-INSERT INTO roles_users VALUES (2,  3);
-INSERT INTO roles_users VALUES (3,  3);
+INSERT INTO users_roles VALUES (1,  3);
+INSERT INTO users_roles VALUES (2,  3);
+INSERT INTO users_roles VALUES (3,  3);
 -- user4 has roles user, manager, admin, superadmin --
-INSERT INTO roles_users VALUES (1,  4);
-INSERT INTO roles_users VALUES (2,  4);
-INSERT INTO roles_users VALUES (3,  4);
-INSERT INTO roles_users VALUES (4,  4);
+INSERT INTO users_roles VALUES (1,  4);
+INSERT INTO users_roles VALUES (2,  4);
+INSERT INTO users_roles VALUES (3,  4);
+INSERT INTO users_roles VALUES (4,  4);
 
 
 --
