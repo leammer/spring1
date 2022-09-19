@@ -45,10 +45,14 @@ public interface MappingUtils {
 	Cart mapToEntity(CartDto dto);
 
 	@Mapping(target = "roles", qualifiedByName = "RoleToString")
+	@Mapping(target = "password", ignore = true)
 	UserDto mapToDto(User entity);
 
 	@Named("RoleToString")
 	default String roleToString(Role role) {
 		return role.getName();
 	}
+
+	@Mapping(target = "roles", ignore = true)
+	User mapToEntity(UserDto dto);
 }

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -40,8 +41,8 @@ public class User {
 	@OneToOne(mappedBy = "user", cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Customer customer;
 
-	@ManyToMany(mappedBy = "users")
-	private List<Role> roles;
+	@ManyToMany(mappedBy = "users", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+	private List<Role> roles = Collections.<Role>emptyList();
 
 	public User(String username, String password) {
 		this.username = username;
