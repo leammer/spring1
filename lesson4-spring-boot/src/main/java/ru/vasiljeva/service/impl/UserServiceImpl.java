@@ -1,5 +1,6 @@
 package ru.vasiljeva.service.impl;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -7,6 +8,9 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.querydsl.core.BooleanBuilder;
@@ -39,9 +43,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private MappingUtils mappingUtils;
 
+	@Autowired
+	private PasswordEncoder encoder;
+
 	@Override
 	public UserDto addUser(UserDto dto) {
-		if (this.userRepository.findByUsername(dto.getUsername()) != null) {
+		if (this.userRepository.findByUsername(dto.getUsername()).get() != null) {
 			throw new ServiceException(ExceptionType.ALREADY_EXISTS, "user");
 		}
 		return saveOrUpdate(dto);
@@ -82,9 +89,17 @@ public class UserServiceImpl implements UserService {
 		//@formatter:on
 	}
 
+	@Override
+	public org.springframework.security.core.userdetails.User findUserByUsername(String username) {
+		return userRepository.findByUsername(username)
+				.map(user -> new org.springframework.security.core.userdetails.User(user.getUsername(),
+						user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ADMIN"))))
+				.orElseThrow(() -> new UsernameNotFoundException(username));
+	}
+
 	private UserDto saveOrUpdate(UserDto dto) {
 		QRole role = QRole.role;
-		User entity = mappingUtils.mapToEntity(dto);
+		User entity = mappingUtils.mapToEntity(dto, encoder);
 
 		if (dto.getRoles() != null) {
 			BooleanBuilder predicateRole = new BooleanBuilder();

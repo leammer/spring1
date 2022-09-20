@@ -14,4 +14,6 @@ public interface UserService {
 	void removeUser(Long id);
 
 	Page<UserDto> getAll(String filter, Integer number, Integer size, String sort);
+
+	org.springframework.security.core.userdetails.User findUserByUsername(String username);
 }
