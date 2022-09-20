@@ -39,6 +39,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductDto addProduct(ProductDto dto) {
+		if (this.productRepository.findById(dto.getId()) != null) {
+			throw new ServiceException(ExceptionType.ALREADY_EXISTS, "product");
+		}
+		return mappingUtils.mapToDto(this.productRepository.saveAndFlush(mappingUtils.mapToEntity(dto)));
+	}
+
+	@Override
+	public ProductDto updateProduct(ProductDto dto) {
 		return mappingUtils.mapToDto(this.productRepository.saveAndFlush(mappingUtils.mapToEntity(dto)));
 	}
 

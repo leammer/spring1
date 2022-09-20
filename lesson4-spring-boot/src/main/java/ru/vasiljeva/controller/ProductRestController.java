@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,8 +41,13 @@ public class ProductRestController {
 	}
 
 	@PostMapping
-	public ProductDto saveProduct(@RequestBody @Valid ProductDto request) {
+	public ProductDto addProduct(@RequestBody @Valid ProductDto request) {
 		return this.service.addProduct(request);
+	}
+	
+	@PutMapping(BY_ID)
+	public ProductDto updateProduct(@PathVariable Long id, @RequestBody @Valid ProductDto request) {
+		return this.service.updateProduct(request);
 	}
 
 	@DeleteMapping(BY_ID)
