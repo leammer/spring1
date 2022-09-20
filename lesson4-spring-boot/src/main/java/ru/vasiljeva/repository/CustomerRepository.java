@@ -8,4 +8,5 @@ import ru.vasiljeva.model.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long>, QuerydslPredicateExecutor<Customer> {
+	Customer findByUserId(Long userId);
 }

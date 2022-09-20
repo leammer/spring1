@@ -1,14 +1,13 @@
 package ru.vasiljeva.service;
 
 import ru.vasiljeva.dto.PersonalInfoDto;
-import ru.vasiljeva.model.ContactType;
 
 public interface CustomerService {
-	PersonalInfoDto getPersonalInfo(Long customerId);
+	PersonalInfoDto addPersonalInfo(Long usereId, PersonalInfoDto dto);
 
-	void updatePersonalInfoId(Long customerId, PersonalInfoDto dto);
+	PersonalInfoDto getPersonalInfo(Long userId);
 
-	PersonalInfoDto addContact(Long customerId, ContactType type, String value);
+	PersonalInfoDto updatePersonalInfo(Long userId, PersonalInfoDto dto);
 
-	void removeContact(Long customerId, Long contactId);
+	void removePersonalInfo(Long userId, Long customerId);
 }

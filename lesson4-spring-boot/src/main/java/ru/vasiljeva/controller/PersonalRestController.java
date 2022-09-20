@@ -15,15 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import ru.vasiljeva.dto.PersonalInfoDto;
-import ru.vasiljeva.exceptions.ExceptionType;
-import ru.vasiljeva.exceptions.ServiceException;
-import ru.vasiljeva.model.ContactType;
 import ru.vasiljeva.service.CustomerService;
 
 @RestController
@@ -38,27 +33,18 @@ public class PersonalRestController {
 		return this.service.getPersonalInfo(id);
 	}
 
-	@PutMapping(BY_ID)
-	public void updatePersonalInfoId(@PathVariable Long id, @RequestBody @Valid PersonalInfoDto dto) {
-		this.service.updatePersonalInfoId(id, dto);
+	@PostMapping(BY_ID)
+	PersonalInfoDto addPersonalInfo(@PathVariable Long id, @RequestBody PersonalInfoDto dto) {
+		return this.service.addPersonalInfo(id, dto);
 	}
 
-	@PostMapping(BY_ID)
-	PersonalInfoDto addContact(@PathVariable Long id, @RequestBody JsonNode node) {
-		if (!node.hasNonNull("type") || !node.hasNonNull("value")) {
-			throw new ServiceException(ExceptionType.BAD_REQUEST, "Incorrect json format: type or value missed");
-		}
-		ContactType type = ContactType.valueOf(node.get("type").asText());
-		String value = node.get("value").asText();
-		return this.service.addContact(id, type, value);
+	@PutMapping(BY_ID)
+	public PersonalInfoDto updatePersonalInfoId(@PathVariable Long id, @RequestBody @Valid PersonalInfoDto dto) {
+		return this.service.updatePersonalInfo(id, dto);
 	}
 
 	@DeleteMapping(BY_ID)
-	void removeContact(@PathVariable Long id, @RequestBody ObjectNode node) {
-		if (!node.hasNonNull("contact_id")) {
-			throw new ServiceException(ExceptionType.BAD_REQUEST, "Incorrect json format: contact_id missed");
-		}
-		Long contactId = node.get("contact_id").asLong();
-		this.service.removeContact(id, contactId);
+	void removePersonalInfo(@PathVariable Long id, @RequestParam(name = "customer_id") Long customerId) {
+		this.service.removePersonalInfo(id, customerId);
 	}
 }
