@@ -28,10 +28,12 @@ public class Cart {
 	private Long id;
 
 	@OneToOne
+
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_cart_customer"))
 	private Customer customer;
 
 	@OneToMany(mappedBy = "cart", cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
 			CascadeType.MERGE }, orphanRemoval = true)
 	private Set<Item> items;
+
 }

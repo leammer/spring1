@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,7 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -41,15 +40,12 @@ public class User {
 	@Column(nullable = false, length = 1024)
 	private String password;
 
-	@OneToOne(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
-	private Customer customer;
-
 	//@formatter:off
 	@ManyToMany(fetch = FetchType.LAZY, 
 			cascade = { 
 					CascadeType.MERGE, 
 					CascadeType.PERSIST, 
-					CascadeType.REFRESH 
+					CascadeType.REFRESH
 					})
 	@JoinTable(
 			name = "users_roles", 
@@ -59,7 +55,7 @@ public class User {
 			inverseForeignKey = @ForeignKey(name = "FK_users_roles") 
 			)
 	//@formatter:on
-	private Set<Role> roles = Collections.<Role>emptySet();
+	private Set<Role> roles = new HashSet<>();
 
 	public User(String username, String password) {
 		this.username = username;

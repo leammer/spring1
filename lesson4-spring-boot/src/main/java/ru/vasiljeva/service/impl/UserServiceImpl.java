@@ -1,15 +1,9 @@
 package ru.vasiljeva.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import javax.validation.constraints.NotBlank;
-
-import org.hibernate.collection.internal.PersistentList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -89,9 +83,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private UserDto saveOrUpdate(UserDto dto) {
-		QUser user = QUser.user;
 		QRole role = QRole.role;
-
 		User entity = mappingUtils.mapToEntity(dto);
 
 		if (dto.getRoles() != null) {
