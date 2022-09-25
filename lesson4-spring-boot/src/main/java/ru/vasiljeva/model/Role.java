@@ -3,23 +3,21 @@ package ru.vasiljeva.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.List;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "roles")
+@Table(name = "roles", uniqueConstraints = { @UniqueConstraint(name = "FK_name", columnNames = "name") })
 @NoArgsConstructor
 public class Role {
 
@@ -27,19 +25,11 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(nullable = false)
 	private String name;
 
-	//@formatter:off
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "roles_users", 
-			joinColumns = { @JoinColumn(name = "role_id") }, 
-			inverseJoinColumns = { @JoinColumn(name = "user_id") }, 
-			foreignKey = @ForeignKey(name = "FK_users_roles"), 
-			inverseForeignKey = @ForeignKey(name = "FK_roles_users")
-			)
-	//@formatter:on
-	private List<User> users;
+	@ManyToMany(mappedBy = "roles")
+	private Set<User> users;
 
 	@Override
 	public String toString() {

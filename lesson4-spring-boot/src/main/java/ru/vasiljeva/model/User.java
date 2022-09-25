@@ -41,19 +41,17 @@ public class User {
 	private String password;
 
 	//@formatter:off
-	@ManyToMany(fetch = FetchType.LAZY, 
-			cascade = { 
+	@ManyToMany(cascade = { 
 					CascadeType.MERGE, 
 					CascadeType.PERSIST, 
 					CascadeType.REFRESH
-					})
+					}, fetch= FetchType.EAGER)
 	@JoinTable(
-			name = "users_roles", 
-			joinColumns = { @JoinColumn(name = "user_id") }, 
-			inverseJoinColumns = {	@JoinColumn(name = "role_id") }, 
-			foreignKey = @ForeignKey(name = "FK_roles_users"), 
-			inverseForeignKey = @ForeignKey(name = "FK_users_roles") 
-			)
+		name = "users_roles", 
+		joinColumns = { @JoinColumn(name = "fk_user") }, 
+		inverseJoinColumns = { @JoinColumn(name = "fk_role") },
+		foreignKey = @ForeignKey(name = "fk_user_role"), 
+		inverseForeignKey = @ForeignKey(name = "fk_role_user"))
 	//@formatter:on
 	private Set<Role> roles = new HashSet<>();
 

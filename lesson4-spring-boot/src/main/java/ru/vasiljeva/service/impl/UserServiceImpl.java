@@ -1,10 +1,7 @@
 package ru.vasiljeva.service.impl;
 
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,9 +17,7 @@ import lombok.Setter;
 import ru.vasiljeva.dto.UserDto;
 import ru.vasiljeva.exceptions.ExceptionType;
 import ru.vasiljeva.exceptions.ServiceException;
-import ru.vasiljeva.model.QRole;
 import ru.vasiljeva.model.QUser;
-import ru.vasiljeva.model.Role;
 import ru.vasiljeva.model.User;
 import ru.vasiljeva.repository.RoleRepository;
 import ru.vasiljeva.repository.UserRepository;
@@ -98,17 +93,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private UserDto saveOrUpdate(UserDto dto) {
-		QRole role = QRole.role;
 		User entity = mappingUtils.mapToEntity(dto, encoder);
 
 		if (dto.getRoles() != null) {
-			BooleanBuilder predicateRole = new BooleanBuilder();
-			for (String roleValue : dto.getRoles()) {
-				predicateRole.or(role.name.equalsIgnoreCase(roleValue));
-			}
-			Iterable<Role> iterator = this.roleRepository.findAll(predicateRole);
-			Set<Role> roles = StreamSupport.stream(iterator.spliterator(), false).collect(Collectors.toSet());
-			entity.setRoles(roles);
+			entity.setRoles(this.roleRepository.findAllByNameIn(Arrays.asList(dto.getRoles())));
 		}
 
 		return mappingUtils.mapToDto(this.userRepository.saveAndFlush(entity));
