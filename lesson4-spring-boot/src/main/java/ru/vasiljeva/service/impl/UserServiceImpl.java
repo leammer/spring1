@@ -1,7 +1,8 @@
 package ru.vasiljeva.service.impl;
 
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -86,10 +87,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public org.springframework.security.core.userdetails.User findUserByUsername(String username) {
+		//@formatter:off
 		return userRepository.findByUsername(username)
 				.map(user -> new org.springframework.security.core.userdetails.User(user.getUsername(),
-						user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ADMIN"))))
+						user.getPassword(),
+						user.getRoles()
+							.stream()
+							.map(role -> new SimpleGrantedAuthority(role.getName()))
+							.collect(Collectors.toList())))
 				.orElseThrow(() -> new UsernameNotFoundException(username));
+		//@formatter:on
 	}
 
 	private UserDto saveOrUpdate(UserDto dto) {
