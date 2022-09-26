@@ -1,6 +1,7 @@
 package ru.vasiljeva.service.impl;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import ru.vasiljeva.dto.UserDto;
 import ru.vasiljeva.exceptions.ExceptionType;
 import ru.vasiljeva.exceptions.ServiceException;
 import ru.vasiljeva.model.QUser;
+import ru.vasiljeva.model.Role;
 import ru.vasiljeva.model.User;
 import ru.vasiljeva.repository.RoleRepository;
 import ru.vasiljeva.repository.UserRepository;
@@ -99,6 +101,12 @@ public class UserServiceImpl implements UserService {
 		//@formatter:on
 	}
 
+	@Override
+	public List<String> getRoles() {
+		List<Role> roles = this.roleRepository.findAll();
+		return roles.stream().map(role -> this.mappingUtils.roleToString(role)).collect(Collectors.toList());
+	}
+	
 	private UserDto saveOrUpdate(UserDto dto) {
 		User entity = mappingUtils.mapToEntity(dto, encoder);
 

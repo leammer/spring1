@@ -2,6 +2,7 @@ package ru.vasiljeva.controller;
 
 import static ru.vasiljeva.utils.AppConstants.REST_USER_CONTROLLER_MAPPING;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -10,6 +11,7 @@ import static ru.vasiljeva.utils.AppConstants.BY_ID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,4 +62,10 @@ public class UserRestController {
 		return this.service.updateUser(dto);
 	}
 
+	@GetMapping("/roles")
+	@Secured("ROLE_SUPERUSER")
+	List<String> getRoles() {
+		return this.service.getRoles();
+	}
+	
 }
