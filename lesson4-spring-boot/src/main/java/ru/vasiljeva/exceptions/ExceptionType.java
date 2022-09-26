@@ -3,6 +3,7 @@ package ru.vasiljeva.exceptions;
 public enum ExceptionType {
 	//@formatter:off
 	BAD_REQUEST("ERROR-400"),
+	FORBIDDEN("ERROR-403"),
 	NOT_FOUND("ERROR-404"),
 	METHOD_NOT_ALLOWED("ERRPR-405"),
 	ALREADY_EXISTS("ERROR_409"),
