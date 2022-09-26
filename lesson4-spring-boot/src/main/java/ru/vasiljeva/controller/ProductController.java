@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -49,11 +50,13 @@ public class ProductController {
 	}
 
 	@GetMapping(NEW)
+	@Secured({ "ROLE_MANAGER", "ROLE_ADMIN" })
 	public String newProduct() {
 		return "new_product_form";
 	}
 
 	@DeleteMapping(BY_ID)
+	@Secured({ "ROLE_MANAGER", "ROLE_ADMIN" })
 	public String deleteById(@PathVariable Long id, Model model) {
 		log.info("Remove product by id " + id);
 		this.service.removeProduct(id);
@@ -61,6 +64,7 @@ public class ProductController {
 	}
 
 	@PostMapping
+	@Secured({ "ROLE_MANAGER", "ROLE_ADMIN" })
 	public String saveProduct(@RequestBody @Valid ProductDto request, Model model) {
 		log.info("Save product" + request);
 		this.service.addProduct(request);

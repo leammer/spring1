@@ -1,8 +1,10 @@
 package ru.vasiljeva.utils;
 
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ru.vasiljeva.dto.PersonalInfoDto;
 import ru.vasiljeva.dto.CartDto;
@@ -54,5 +56,11 @@ public interface MappingUtils {
 	}
 
 	@Mapping(target = "roles", ignore = true)
-	User mapToEntity(UserDto dto);
+	@Mapping(source = "password", target = "password", qualifiedByName = "encode")
+	User mapToEntity(UserDto dto, @Context PasswordEncoder encoder);
+
+	@Named("encode")
+	default String encode(String password, @Context PasswordEncoder encoder) {
+		return encoder.encode(password);
+	}
 }

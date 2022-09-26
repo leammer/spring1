@@ -49,7 +49,8 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS roles (
 	id bigserial NOT NULL,
-	"name" varchar(255) NULL,
+	"name" varchar(255) NOT NULL,
+	CONSTRAINT fk_name UNIQUE (name),
 	CONSTRAINT roles_pkey PRIMARY KEY (id)
 );
 
@@ -57,21 +58,10 @@ CREATE TABLE IF NOT EXISTS roles (
 -- Name: users_roles; Type: TABLE; Schema: test;
 --
 CREATE TABLE IF NOT EXISTS users_roles (
-	user_id int8 NOT NULL,
-	role_id int8 NOT NULL,
-	CONSTRAINT users_roles_pkey PRIMARY KEY (user_id, role_id),
-	CONSTRAINT fk_roles_users FOREIGN KEY (user_id) REFERENCES users(id),
-	CONSTRAINT fk_users_roles FOREIGN KEY (role_id) REFERENCES roles(id)
-);
-
---
--- Name: roles_users; Type: TABLE; Schema: test;
---
-CREATE TABLE IF NOT EXISTS roles_users (
-	roles_id int8 NOT NULL,
-	users_id int8 NOT NULL,
-	CONSTRAINT fk_roles_users FOREIGN KEY (users_id) REFERENCES users(id),
-	CONSTRAINT fk_users_roles FOREIGN KEY (roles_id) REFERENCES roles(id)
+	fk_user int8 NOT NULL,
+	fk_role int8 NOT NULL,
+	CONSTRAINT fk_role_user FOREIGN KEY (fk_role) REFERENCES roles(id),
+	CONSTRAINT fk_user_role FOREIGN KEY (fk_user) REFERENCES users(id)
 );
 
 --
@@ -157,19 +147,19 @@ INSERT INTO product VALUES (DEFAULT, 250.65, false, '','Cheese');
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: test;
 --
-INSERT INTO users VALUES (DEFAULT,  'user1USER!', 'user1');
-INSERT INTO users VALUES (DEFAULT,  'user2USER!', 'user2');
-INSERT INTO users VALUES (DEFAULT,  'user3USER!', 'user3');
-INSERT INTO users VALUES (DEFAULT,  'user4USER!', 'user4');
+INSERT INTO users VALUES (DEFAULT,  '$2a$10$GMeyncHgI1onEoeglEJdZ.VabMnV9NeoeEt0hBywRLqMrtLVc7IFe', 'user1');
+INSERT INTO users VALUES (DEFAULT,  '$2a$10$GMeyncHgI1onEoeglEJdZ.VabMnV9NeoeEt0hBywRLqMrtLVc7IFe', 'user2');
+INSERT INTO users VALUES (DEFAULT,  '$2a$10$GMeyncHgI1onEoeglEJdZ.VabMnV9NeoeEt0hBywRLqMrtLVc7IFe', 'user3');
+INSERT INTO users VALUES (DEFAULT,  '$2a$10$GMeyncHgI1onEoeglEJdZ.VabMnV9NeoeEt0hBywRLqMrtLVc7IFe', 'user4');
 
 --
 -- Data for Name: roles; Type: TABLE DATA; Schema: test;
 --
 
-INSERT INTO roles VALUES (DEFAULT,  'user');
-INSERT INTO roles VALUES (DEFAULT,  'manager');
-INSERT INTO roles VALUES (DEFAULT,  'admin');
-INSERT INTO roles VALUES (DEFAULT,  'superuser');
+INSERT INTO roles VALUES (DEFAULT,  'ROLE_USER');
+INSERT INTO roles VALUES (DEFAULT,  'ROLE_MANAGER');
+INSERT INTO roles VALUES (DEFAULT,  'ROLE_ADMIN');
+INSERT INTO roles VALUES (DEFAULT,  'ROLE_SUPERUSER');
 
 --
 -- Data for Name: users_roles; Type: TABLE DATA; Schema: test;
@@ -177,16 +167,16 @@ INSERT INTO roles VALUES (DEFAULT,  'superuser');
 -- user1 has role user --
 INSERT INTO users_roles VALUES (1,  1);
 -- user2 has roles user, manager --
-INSERT INTO users_roles VALUES (1,  2);
+INSERT INTO users_roles VALUES (2,  1);
 INSERT INTO users_roles VALUES (2,  2);
 -- user3 has roles user, manager, admin --
-INSERT INTO users_roles VALUES (1,  3);
-INSERT INTO users_roles VALUES (2,  3);
+INSERT INTO users_roles VALUES (3,  1);
+INSERT INTO users_roles VALUES (3,  2);
 INSERT INTO users_roles VALUES (3,  3);
 -- user4 has roles user, manager, admin, superadmin --
-INSERT INTO users_roles VALUES (1,  4);
-INSERT INTO users_roles VALUES (2,  4);
-INSERT INTO users_roles VALUES (3,  4);
+INSERT INTO users_roles VALUES (4,  1);
+INSERT INTO users_roles VALUES (4,  2);
+INSERT INTO users_roles VALUES (4,  3);
 INSERT INTO users_roles VALUES (4,  4);
 
 

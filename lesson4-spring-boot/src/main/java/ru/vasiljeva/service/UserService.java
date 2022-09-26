@@ -1,5 +1,7 @@
 package ru.vasiljeva.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import ru.vasiljeva.dto.UserDto;
@@ -14,4 +16,8 @@ public interface UserService {
 	void removeUser(Long id);
 
 	Page<UserDto> getAll(String filter, Integer number, Integer size, String sort);
+
+	org.springframework.security.core.userdetails.User findUserByUsername(String username);
+	
+	List<String> getRoles();
 }

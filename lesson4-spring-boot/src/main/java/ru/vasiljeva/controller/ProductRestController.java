@@ -7,12 +7,14 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,11 +42,19 @@ public class ProductRestController {
 	}
 
 	@PostMapping
-	public ProductDto saveProduct(@RequestBody @Valid ProductDto request) {
+	@Secured({ "ROLE_MANAGER", "ROLE_ADMIN" })
+	public ProductDto addProduct(@RequestBody @Valid ProductDto request) {
 		return this.service.addProduct(request);
 	}
 
+	@PutMapping(BY_ID)
+	@Secured({ "ROLE_MANAGER", "ROLE_ADMIN" })
+	public ProductDto updateProduct(@PathVariable Long id, @RequestBody @Valid ProductDto request) {
+		return this.service.updateProduct(request);
+	}
+
 	@DeleteMapping(BY_ID)
+	@Secured({ "ROLE_MANAGER", "ROLE_ADMIN" })
 	public void deleteById(@PathVariable Long id) {
 		this.service.removeProduct(id);
 	}

@@ -1,18 +1,15 @@
 package ru.vasiljeva.service.impl;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import javax.validation.constraints.NotBlank;
-
-import org.hibernate.collection.internal.PersistentList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.querydsl.core.BooleanBuilder;
@@ -22,7 +19,6 @@ import lombok.Setter;
 import ru.vasiljeva.dto.UserDto;
 import ru.vasiljeva.exceptions.ExceptionType;
 import ru.vasiljeva.exceptions.ServiceException;
-import ru.vasiljeva.model.QRole;
 import ru.vasiljeva.model.QUser;
 import ru.vasiljeva.model.Role;
 import ru.vasiljeva.model.User;
@@ -45,9 +41,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private MappingUtils mappingUtils;
 
+	@Autowired
+	private PasswordEncoder encoder;
+
 	@Override
 	public UserDto addUser(UserDto dto) {
-		if (this.userRepository.findByUsername(dto.getUsername()) != null) {
+		if (this.userRepository.findByUsername(dto.getUsername()).get() != null) {
 			throw new ServiceException(ExceptionType.ALREADY_EXISTS, "user");
 		}
 		return saveOrUpdate(dto);
@@ -88,20 +87,31 @@ public class UserServiceImpl implements UserService {
 		//@formatter:on
 	}
 
-	private UserDto saveOrUpdate(UserDto dto) {
-		QUser user = QUser.user;
-		QRole role = QRole.role;
+	@Override
+	public org.springframework.security.core.userdetails.User findUserByUsername(String username) {
+		//@formatter:off
+		return userRepository.findByUsername(username)
+				.map(user -> new org.springframework.security.core.userdetails.User(user.getUsername(),
+						user.getPassword(),
+						user.getRoles()
+							.stream()
+							.map(role -> new SimpleGrantedAuthority(role.getName()))
+							.collect(Collectors.toList())))
+				.orElseThrow(() -> new UsernameNotFoundException(username));
+		//@formatter:on
+	}
 
-		User entity = mappingUtils.mapToEntity(dto);
+	@Override
+	public List<String> getRoles() {
+		List<Role> roles = this.roleRepository.findAll();
+		return roles.stream().map(role -> this.mappingUtils.roleToString(role)).collect(Collectors.toList());
+	}
+	
+	private UserDto saveOrUpdate(UserDto dto) {
+		User entity = mappingUtils.mapToEntity(dto, encoder);
 
 		if (dto.getRoles() != null) {
-			BooleanBuilder predicateRole = new BooleanBuilder();
-			for (String roleValue : dto.getRoles()) {
-				predicateRole.or(role.name.equalsIgnoreCase(roleValue));
-			}
-			Iterable<Role> iterator = this.roleRepository.findAll(predicateRole);
-			Set<Role> roles = StreamSupport.stream(iterator.spliterator(), false).collect(Collectors.toSet());
-			entity.setRoles(roles);
+			entity.setRoles(this.roleRepository.findAllByNameIn(Arrays.asList(dto.getRoles())));
 		}
 
 		return mappingUtils.mapToDto(this.userRepository.saveAndFlush(entity));

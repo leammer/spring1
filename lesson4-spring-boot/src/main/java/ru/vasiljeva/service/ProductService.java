@@ -8,6 +8,8 @@ import ru.vasiljeva.dto.ProductDto;
 public interface ProductService {
 	ProductDto addProduct(ProductDto product);
 
+	ProductDto updateProduct(ProductDto product);
+
 	void removeProduct(Long id);
 
 	ProductDto getProductById(Long id);

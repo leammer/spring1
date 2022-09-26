@@ -1,6 +1,7 @@
 package ru.vasiljeva.model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -36,11 +37,11 @@ public class Customer {
 	@Embedded
 	private Passport passport;
 
-	@OneToMany(mappedBy = "customer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
-			CascadeType.MERGE }, orphanRemoval = true)
-	private List<Contact> contacts;
+	@OneToMany(mappedBy = "customer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH,
+			CascadeType.MERGE })
+	private Set<Contact> contacts = new HashSet<>();
 
-	@OneToOne
+	@OneToOne(orphanRemoval = false, cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_customer_user"))
 	private User user;
 }

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import static ru.vasiljeva.utils.AppConstants.BY_ID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,21 +30,25 @@ public class CartRestController {
 	private CartService service;
 
 	@GetMapping(BY_ID)
+	@Secured("ROLE_USER")
 	public CartDto getCustomerCart(@PathVariable Long id) {
 		return this.service.getCustomerCart(id);
 	}
 
 	@PostMapping(BY_ID)
+	@Secured("ROLE_USER")
 	public CartDto addProductToCart(@PathVariable Long id, @RequestBody @Valid ItemDto item) {
 		return this.service.addProductToCart(id, item);
 	}
 
 	@DeleteMapping(BY_ID)
+	@Secured("ROLE_USER")
 	void removeItemFromCart(@PathVariable Long id, Long itemId) {
 
 	}
 
 	@PutMapping(BY_ID)
+	@Secured("ROLE_USER")
 	void updateItemFromCart(@PathVariable Long id, ItemDto item) {
 
 	}

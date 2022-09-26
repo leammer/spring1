@@ -1,11 +1,12 @@
 package ru.vasiljeva.controller;
 
-import static ru.vasiljeva.utils.AppConstants.ERROR_CODE_FORMAT;
-import static ru.vasiljeva.utils.AppConstants.ERROR_STATUS_FORMAT;
-import static ru.vasiljeva.utils.AppConstants.ERROR_MESSAGE_FORMAT;
 import static ru.vasiljeva.utils.AppConstants.ERROR_CAUSE_FORMAT;
+import static ru.vasiljeva.utils.AppConstants.ERROR_CODE_FORMAT;
+import static ru.vasiljeva.utils.AppConstants.ERROR_MESSAGE_FORMAT;
+import static ru.vasiljeva.utils.AppConstants.ERROR_STATUS_FORMAT;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -67,6 +68,12 @@ public class GlobalExceptionController {
 		}
 
 		ErrorDto error = createErrorDto(ExceptionType.BAD_REQUEST, errorMsg);
+		return new ResponseEntity<>(error, error.getStatus());
+	}
+
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<ErrorDto> handleAccessDeniedException(AccessDeniedException ex) {
+		ErrorDto error = createErrorDto(ExceptionType.FORBIDDEN, ex.getMessage());
 		return new ResponseEntity<>(error, error.getStatus());
 	}
 
