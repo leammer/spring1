@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import static ru.vasiljeva.utils.AppConstants.BY_ID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,21 +30,25 @@ public class PersonalRestController {
 	private CustomerService service;
 
 	@GetMapping(BY_ID)
+	@Secured("ROLE_USER")
 	public PersonalInfoDto getPersonalInfo(@PathVariable Long id) {
 		return this.service.getPersonalInfo(id);
 	}
 
 	@PostMapping(BY_ID)
+	@Secured("ROLE_USER")
 	PersonalInfoDto addPersonalInfo(@PathVariable Long id, @RequestBody PersonalInfoDto dto) {
 		return this.service.addPersonalInfo(id, dto);
 	}
 
 	@PutMapping(BY_ID)
+	@Secured("ROLE_USER")
 	public PersonalInfoDto updatePersonalInfoId(@PathVariable Long id, @RequestBody @Valid PersonalInfoDto dto) {
 		return this.service.updatePersonalInfo(id, dto);
 	}
 
 	@DeleteMapping(BY_ID)
+	@Secured({ "ROLE_USER", "ROLE_SUPERUSER" })
 	void removePersonalInfo(@PathVariable Long id, @RequestParam(name = "customer_id") Long customerId) {
 		this.service.removePersonalInfo(id, customerId);
 	}

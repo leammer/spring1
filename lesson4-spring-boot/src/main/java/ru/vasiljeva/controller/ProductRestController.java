@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,16 +42,19 @@ public class ProductRestController {
 	}
 
 	@PostMapping
+	@Secured({ "ROLE_MANAGER", "ROLE_ADMIN" })
 	public ProductDto addProduct(@RequestBody @Valid ProductDto request) {
 		return this.service.addProduct(request);
 	}
-	
+
 	@PutMapping(BY_ID)
+	@Secured({ "ROLE_MANAGER", "ROLE_ADMIN" })
 	public ProductDto updateProduct(@PathVariable Long id, @RequestBody @Valid ProductDto request) {
 		return this.service.updateProduct(request);
 	}
 
 	@DeleteMapping(BY_ID)
+	@Secured({ "ROLE_MANAGER", "ROLE_ADMIN" })
 	public void deleteById(@PathVariable Long id) {
 		this.service.removeProduct(id);
 	}

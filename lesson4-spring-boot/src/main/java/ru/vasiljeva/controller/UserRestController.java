@@ -34,6 +34,7 @@ public class UserRestController {
 	private UserService service;
 
 	@GetMapping
+	@Secured({ "ROLE_ADMIN", "ROLE_SUPERUSER" })
 	public Page<UserDto> getAllUsers(@RequestParam Optional<String> filter,
 			@RequestParam(defaultValue = "0") Integer number, @RequestParam(defaultValue = "20") Integer size,
 			@RequestParam Optional<String> sort) {
@@ -43,21 +44,25 @@ public class UserRestController {
 	}
 
 	@GetMapping(BY_ID)
+	@Secured("ROLE_SUPERUSER")
 	public UserDto getUser(@PathVariable Long id) {
 		return this.service.getUser(id);
 	}
 
 	@PostMapping()
+	@Secured("ROLE_SUPERUSER")
 	public UserDto addUser(@RequestBody @Valid UserDto dto) {
 		return this.service.addUser(dto);
 	}
 
 	@DeleteMapping(BY_ID)
+	@Secured("ROLE_SUPERUSER")
 	void removeUser(@PathVariable Long id) {
 		this.service.removeUser(id);
 	}
 
 	@PutMapping(BY_ID)
+	@Secured("ROLE_SUPERUSER")
 	UserDto updateUser(@PathVariable Long id, @RequestBody @Valid UserDto dto) {
 		return this.service.updateUser(dto);
 	}
@@ -67,5 +72,5 @@ public class UserRestController {
 	List<String> getRoles() {
 		return this.service.getRoles();
 	}
-	
+
 }
