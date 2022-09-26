@@ -16,6 +16,7 @@ import { AppService } from './app.service';
 import { CartService } from './cart/cart.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [
@@ -33,7 +34,8 @@ import { RegisterComponent } from './register/register.component';
 	imports: [
 		BrowserModule,
 		HttpClientModule,
-		AppRoutingModule
+		AppRoutingModule,
+		FormsModule
 	],
 	providers: [ProductService, AppService, CartService],
 	bootstrap: [AppComponent]

@@ -1,26 +1,45 @@
 <h2>Log in</h2>
 <hr>
-<form>
-  <div class="form-group">
-    <label for="usernameInput">Username:&nbsp;&nbsp;</label>
-    <input
+<form
+  (ngSubmit)="onSubmit(form)"
+  #form="ngForm">
+  <div
+    class="form-group"
+    [ngClass]="{'is-invalid': username.invalid&&username.touched}">
+    <label for="usernameInput">Username:&nbsp;&nbsp;</label> <input
       type="text"
       class="form-control"
-      id="usernameInput" ngModel>
+      id="usernameInput"
+      ngModel
+      name="username"
+      required
+      #username="ngModel">
+    <p *ngIf="username.invalid&&username.touched">Username should not be empty</p>
   </div>
-  <div class="form-group">
-    <label for="passwordInput">Password:&nbsp;&nbsp;</label>
-    <input
+  <div
+    class="form-group"
+    [ngClass]="{'is-invalid': password.invalid&&password.touched}">
+    <label for="passwordInput">Password:&nbsp;&nbsp;</label> <input
       type="password"
       class="form-control"
-      id="passwordInput" ngModel>
+      id="passwordInput"
+      ngModel
+      name="password"
+      [pattern]="regex"
+      required
+      #password="ngModel">
+    <p *ngIf="password.errors?.['required']&&password.touched">Password should not be empty</p>
+    <p *ngIf="password.errors?.['pattern']&&password.touched">Password should contain UpperCase
+      and LowerCase, Number, SpecialChar and min 8 Chars</p>
   </div>
   <hr>
   <div class="row justify-content-end">
-    <div class="col-3"> Not registered yet? <a routerLink="/register">Register</a>
+    <div class="col-3">
+      Not registered yet? <a routerLink="/register">Register</a>
     </div>
     <button
       class="btn btn-primary col-1"
-      type="submit">Log in</button>
+      type="submit"
+      [disabled]="form.invalid">Log in</button>
   </div>
 </form>
