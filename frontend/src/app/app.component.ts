@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 	title = 'Grocery EShop';
+	isLogged = false;
+
+	check() {
+		this.isLogged = !this.isLogged;
+	}
 }

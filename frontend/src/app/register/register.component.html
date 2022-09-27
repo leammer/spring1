@@ -1,44 +1,63 @@
 <h2>Register</h2>
 <hr>
-<form>
-  <div class="form-group">
+<form
+  (ngSubmit)="onSubmit()"
+  [formGroup]="form">
+  <div
+    class="form-group"
+    [ngClass]="{'is-invalid': form.get('username')?.invalid&&form.get('username')?.touched}">
     <label for="usernameInput">Username:&nbsp;&nbsp;</label>
     <input
       type="text"
       class="form-control"
       id="usernameInput"
+      formControlName="username"
       aria-describedby="usernameHelp">
     <small
       id="usernameHelp"
-      class="form-text text-muted">Your username should bu unique</small>
+      *ngIf="form.get('username')?.errors?.['required']&&form.get('username')?.touched"
+      class="form-text text-muted">Username should not be empty</small>
   </div>
-  <div class="form-group">
+  <div
+    class="form-group"
+    [ngClass]="{'is-invalid': form.get('confirmPassword')?.invalid&&form.get('confirmPassword')?.touched}">
     <label for="passwordInput">Password:&nbsp;&nbsp;</label>
     <input
       type="password"
       class="form-control"
       id="passwordInput"
+      formControlName="password"
       aria-describedby="passwordHelp">
     <small
       id="passwordHelp"
-      class="form-text text-muted">Password should contain UpperCase and LowerCase, Number,
-      SpecialChar and min 8 Chars</small>
+      class="form-text text-muted">
+      <p *ngIf="form.get('password')?.errors?.['required']&&form.get('password')?.touched">Password
+        should not be empty</p>
+      <p *ngIf="form.get('password')?.errors?.['pattern']&&form.get('password')?.touched">Password
+        should contain UpperCase and LowerCase, Number, SpecialChar and min 8 Chars</p>
+    </small>
   </div>
-  <div class="form-group">
-    <label for="repeatPasswordInput">Repeat password:&nbsp;&nbsp;</label>
+  <div
+    class="form-group"
+    [ngClass]="{'is-invalid': form.get('confirmPassword')?.invalid&&form.get('confirmPassword')?.touched}">
+    <label for="confirmPasswordInput">Confirm password:&nbsp;&nbsp;</label>
     <input
       type="password"
       class="form-control"
-      id="repeatPasswordInput"
-      aria-describedby="repeatPasswordHelp">
+      id="confirmPasswordInput"
+      formControlName="confirmPassword"
+      aria-describedby="confirmPasswordHelp">
     <small
-      id="repeatPasswordHelp"
-      class="form-text text-muted">This password must exactly match the previous one</small>
+      id="confirmPasswordHelp"
+      class="form-text text-muted"
+      *ngIf="form.get('confirmPassword')?.errors?.['notMatched']&&form.get('confirmPassword')?.touched">This
+      password must exactly match the previous one</small>
   </div>
   <hr>
   <div class="row justify-content-end">
     <button
       class="btn btn-primary col-1"
-      type="submit">Register</button>
+      type="submit"
+      [disabled]="form.invalid">Register</button>
   </div>
 </form>

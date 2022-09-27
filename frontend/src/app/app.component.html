@@ -26,8 +26,16 @@
         routerLink="/profile">My personal info</a></li>
     </ul>
   </div>
-  <div>
-    <button class="btn btn-primary" routerLink="/login">Log in</button>
+  <div *ngIf="!isLogged">
+    <button
+      class="btn btn-primary"
+      routerLink="/login"
+      (click)="check()">Log in</button>
+  </div>
+  <div *ngIf="isLogged">
+    <button
+      class="btn btn-primary"
+      (click)="check()">Log out</button>
   </div>
 </nav>
 <div class="container">
